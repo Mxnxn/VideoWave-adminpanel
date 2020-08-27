@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
-import Header from "../Header/Header";
+import Header from "./components/Header";
+import ItemsCategories from "./components/ItemsCategories";
+import ItemsTypes from "./components/ItemsTypes";
+import ItemsClasses from "./components/ItemsClasses";
+import { AppBar, Toolbar, Typography, IconButton, Dialog, DialogContent } from "@material-ui/core";
+import { CloseRounded } from "@material-ui/icons";
+import AlertDanger from "../Utils/AlertDanger";
 const InventoryManagement = (props) => {
 	const items = [0,1,2,3,4,56,7,8,9,0,12,31,5415,151,6,1,12,31,3,1,14,16,16,161,61,61];
+
+	const [error, setError] = useState(false);
+	const [openAddModal, setOpenAddModal] = useState(false);
 	return (
 		<div className="fullscreen">
 			<Navbar  />
-            <Header heading={"Management"} />
+            <Header heading={"Management"} setOpenAddModal={setOpenAddModal} />
 			<div className="pcoded-main-container" style={{height:"100vh",minHeight:"100vh"}}>
 				<div className="pcoded-wrapper" >
 					<div className="pcoded-content">
@@ -14,55 +23,45 @@ const InventoryManagement = (props) => {
 							<div className="main-body">
 								<div className="row fix-h-85">
 									<div className="col-lg-4 h-100">
-										<div className="col pr-0 pl-4 h-100 bg-white rounded shadow"  >
-											<div className="row py-2 pl-2 border-bottom">
-												<div className="col-sm-6 col-lg-6 geb text-uppercase fs-20 ls-1">
-													<span className="ls-1">Classes</span>
-												</div>
-												<div className="col-sm-6 col-lg-6 d-flex">
-													<button className="ml-auto my-auto btn btn-primary btn-sm shadow-1">Add</button>
-												</div>
-											</div>
-											<div className=" d-flex flex-wrap item-area " style={{overflowX:"auto",height:"90%"}}  >
-												{items.map((el,index)=><div className="d-flex h-60 m-2 b-bg shadow-1 fira fs-16" ><span className="m-auto">Switcher</span></div>)}
-											</div>
-										</div>
+										<ItemsClasses items={items} />
 									</div>
 									<div className="col-lg-8 h-100   d-flex flex-column ">
-										<div className="col pl-4 pr-0 bg-white border-light rounded shadow " style={{height:"48%"}} >
-											<div className="row py-2 pl-2 border-bottom">
-												<div className="col-sm-10 col-lg-10 geb text-uppercase fs-20 ls-1">
-													<span className="ls-1">Categories</span>
-												</div>
-												<div className="col-sm-2 col-lg-2 d-flex">
-													<button className="ml-auto my-auto btn btn-primary btn-sm shadow-1">Add</button>
-												</div>
-											</div>
-											<div className="d-flex flex-wrap item-area " style={{height:"78%",overflowX:"auto"}}>
-												{items.map((el,index)=><div className="d-flex h-60 m-2 b-bg shadow-1 fira fs-16" ><span className="m-auto">Switcher</span></div>)}
-											</div>
-										</div>
-										{/* Type */}
-										<div className="col pl-4 pr-0 bg-white rounded shadow mt-2" style={{height:"48%"}} >
-											<div className="row py-2 pl-2 border-bottom">
-												<div className="col-sm-10 col-lg-10 geb text-uppercase fs-20 ls-1">
-													<span className="ls-1">Types</span>
-												</div>
-												<div className="col-sm-2 col-lg-2 d-flex">
-													<button className="ml-auto my-auto btn btn-primary btn-sm shadow-1">Add</button>
-												</div>
-											</div>
-											<div className="d-flex flex-wrap item-area"  style={{height:"82%",overflowY:"auto",overflowX:"none"}}>
-												{items.map((el,index)=><div className="d-flex h-60 m-2 b-bg shadow-1 fira fs-16" ><span className="m-auto">Switcher</span></div>)}
-											</div>
-										</div>
+										<ItemsCategories items={items}/>
+										<ItemsTypes items={items}/>
 									</div>
 								</div>
-								
 							</div>
 						</div>
 					</div>
 				</div>
+				<Dialog fullWidth maxWidth="sm" open={openAddModal} component="form">
+					<AppBar position="static" className="bg-dark">
+						<Toolbar className="flex  w-full">
+							<Typography variant="subtitle1" color="inherit">
+								Add Items
+							</Typography>
+							<IconButton className="ml-auto text-white">
+								<CloseRounded/>
+							</IconButton>
+						</Toolbar>
+					</AppBar>
+					<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
+					<AlertDanger error={error} />
+					<div className="d-flex flex-wrap">
+						<div
+							className="col-sm-4"
+							style={{ borderRight: "1px solid #f5f5f5" }}
+						>
+							<div className="row">
+								<div className="col-sm-12">
+									<div className="row">
+										<div className="col-sm-12">
+											<Typography></Typography>
+										</div>
+									</div>
+									</div></div></div></div>
+					</DialogContent>
+				</Dialog>
 			</div>
 		</div>
 	);
