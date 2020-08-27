@@ -1,7 +1,7 @@
 import React
-// , { useState } 
-from "react";
-import { TrendingUp, Home, Package, PlusSquare, Sliders } from "react-feather";
+	// , { useState } 
+	from "react";
+import { TrendingUp, Home, Package, Sliders } from "react-feather";
 import { Link } from "react-router-dom";
 // import { DialogContent, Dialog, AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
 // import { CloseRounded } from "@material-ui/icons";
