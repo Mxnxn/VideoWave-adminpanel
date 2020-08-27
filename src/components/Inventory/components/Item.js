@@ -13,7 +13,7 @@ const Item = ({ items, selected, setSelected }) => {
 						}
 						onClick={(e) => setSelected(items[el])}
 					>
-						<span className="icon">›</span>
+						<span className="icon">•</span>
 						<span className="mtext">{items[el].name}</span>
 					</span>
 				) : null

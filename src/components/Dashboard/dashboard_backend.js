@@ -74,13 +74,16 @@ class DashboardBackend {
 	getAllItems(stoken) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const res = await axios.get(`${process.env.REACT_APP_API_URL}/items`, {
-					headers: {
-						Authorization: "Bearer " + stoken,
-					},
-				});
+				const res = await axios.get(
+					`${process.env.REACT_APP_API_URL}/items?available=true`,
+					{
+						headers: {
+							Authorization: "Bearer " + stoken,
+						},
+					}
+				);
 				if (res) {
-					// if (res.data.code !== 200) throw res.data;
+					if (res.data.code !== 200) throw res.data;
 					resolve(res.data);
 				}
 			} catch (err) {

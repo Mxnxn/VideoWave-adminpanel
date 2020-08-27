@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	TextField,
 	Button,
@@ -20,9 +20,7 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
 	CloseRounded,
-	LockOpenRounded,
 	AddRounded,
-	LockRounded,
 } from "@material-ui/icons";
 
 import moment from "moment";
@@ -52,39 +50,81 @@ const DailogBox = ({
 		moment(report).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS)
 	);
 
+	const [inventory, setInventory] = useState(items);
+	const [dynamicForm, setDynamicForm] = useState([]);
+	const [copyDynamicForm, setCopyDynamicForm] = useState([]);
 	const [form, setForm] = useState(
 		edit
 			? {
-					id: edit.id,
-					name: edit.name,
-					location: edit.location,
-					client_name: edit.client_name,
-					client_phone: edit.client_phone,
-					client_company: edit.client_company,
-					technician_name: edit.technician_name,
-					technician_details: edit.technician_details,
-					vehicle_number: edit.vehicle_number,
-					driver_name: edit.driver_name,
-					driver_phone: edit.driver_phone,
-					invoice_number: edit.invoice_number,
-					priority: edit.priority,
-			  }
+				id: edit.id,
+				name: edit.name,
+				location: edit.location,
+				client_name: edit.client_name,
+				client_phone: edit.client_phone,
+				client_company: edit.client_company,
+				technician_name: edit.technician_name,
+				technician_details: edit.technician_details,
+				vehicle_number: edit.vehicle_number,
+				driver_name: edit.driver_name,
+				driver_phone: edit.driver_phone,
+				invoice_number: edit.invoice_number,
+				priority: edit.priority,
+			}
 			: {
-					id: "",
-					name: "",
-					location: "",
-					client_name: "",
-					client_phone: "",
-					client_company: "",
-					technician_name: "",
-					technician_details: "",
-					vehicle_number: "",
-					driver_name: "",
-					driver_phone: "",
-					invoice_number: "",
-					priority: "04a9f5",
-			  }
+				id: "",
+				name: "",
+				location: "",
+				client_name: "",
+				client_phone: "",
+				client_company: "",
+				technician_name: "",
+				technician_details: "",
+				vehicle_number: "",
+				driver_name: "",
+				driver_phone: "",
+				invoice_number: "",
+				priority: "04a9f5",
+			}
 	);
+
+	useEffect(() => {
+		try {
+			if (edit && edit.items.length > 0) {
+				let temp = [];
+				// edit.items.forEach((el, index) => {
+				// 	for (let i = 0; i < items.length; i++) {
+				// 		if (items[i].id === el.id) {
+				// 			const alternateItems = items[i].serials.filter(
+				// 				(elem) => elem.id !== el.id
+				// 			);
+				// 			items[i].serials = alternateItems;
+				// temp.push({
+				// 	id: index,
+				// 	selected: items[i],
+				// 	qty: el.assigned_quantity,
+				// 	serial_number: el,
+				// });
+				// 		}
+				// 	}
+				// });
+				const assignedItems = edit.items;
+				assignedItems.forEach((assignedItem, index) => {
+					items.forEach((item) => {
+						const filterArr = item.serials.filter((serial) => assignedItem.id !== serial.id && assignedItem.item_id === serial.item_id);
+						item.serials = filterArr;
+						temp.push({
+							id: index,
+							selected: item,
+							qty: assignedItem.assigned_quantity,
+							serial_number: assignedItem,
+						});
+					})
+				})
+				setInventory([...items]);
+				setDynamicForm([...temp]);
+			}
+		} catch (error) { }
+	}, []);
 
 	const [copyForm] = useState(form);
 	const [error, setError] = useState("");
@@ -129,6 +169,10 @@ const DailogBox = ({
 		for (let key in form) {
 			formData.set(key, form[key]);
 		}
+		dynamicForm.forEach((el, index) => {
+			formData.set(`serial_number[${index}]`, el.serial_number.serial_number);
+			formData.set(`serial_quantity[${index}]`, el.qty);
+		});
 		formData.set("start_date", startD);
 		formData.set("end_date", endD);
 		formData.set("reporting_date", reportD);
@@ -213,7 +257,7 @@ const DailogBox = ({
 		try {
 			console.log(destination.droppableId, source.droppableId, draggableId);
 			console.log(items[draggableId]);
-		} catch (error) {}
+		} catch (error) { }
 	};
 
 	const onEndDate = (e) => {
@@ -221,15 +265,6 @@ const DailogBox = ({
 		console.log(endDate);
 		setEndD(endDate);
 	};
-
-	const [dynamicForm, setDynamicForm] = useState([
-		{
-			id: 0,
-			selected: "",
-			serial_number: "",
-			qty: "",
-		},
-	]);
 
 	const onValueChangeDynamicForm = (e, un, id) => {
 		setError("");
@@ -250,7 +285,14 @@ const DailogBox = ({
 		setDynamicForm([...temp]);
 	};
 
-	const [lock, setLock] = useState(false);
+
+	useEffect(() => {
+		console.log("Original Arr : ", dynamicForm);
+	}, [dynamicForm]);
+
+	useEffect(() => {
+		console.log("Copy arr : ", copyDynamicForm);
+	}, [copyDynamicForm]);
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
@@ -324,12 +366,43 @@ const DailogBox = ({
 														<>
 															{!searchResult.flag
 																? items.map((elx) => {
-																		return subItems.map((el, index) =>
-																			el.item_id === elx.id ? (
+																	return subItems.map((el, index) =>
+																		el.item_id === elx.id ? (
+																			<Draggable
+																				draggableId={"" + el.id}
+																				index={index}
+																				key={index}
+																			>
+																				{(provded, snpshot) => {
+																					return (
+																						<div
+																							{...provded.dragHandleProps}
+																							{...provded.draggableProps}
+																							elevation="1"
+																							className="mb-2 alert cursor-pointer rounded alert-info "
+																							ref={provded.innerRef}
+																						>
+																							<span className="mr-auto">
+																								{elx.name}
+																							</span>
+																							<span className="serial-number">
+																								serial : {el.serial_number}
+																							</span>
+																						</div>
+																					);
+																				}}
+																			</Draggable>
+																		) : null
+																	);
+																})
+																: searchResult.items.map((elx) => {
+																	return searchResult.serials.map(
+																		(el, index) => {
+																			return el.item_id === elx.id ? (
 																				<Draggable
 																					draggableId={"" + el.id}
-																					index={index}
 																					key={index}
+																					index={index}
 																				>
 																					{(provded, snpshot) => {
 																						return (
@@ -350,41 +423,10 @@ const DailogBox = ({
 																						);
 																					}}
 																				</Draggable>
-																			) : null
-																		);
-																  })
-																: searchResult.items.map((elx) => {
-																		return searchResult.serials.map(
-																			(el, index) => {
-																				return el.item_id === elx.id ? (
-																					<Draggable
-																						draggableId={"" + el.id}
-																						key={index}
-																						index={index}
-																					>
-																						{(provded, snpshot) => {
-																							return (
-																								<div
-																									{...provded.dragHandleProps}
-																									{...provded.draggableProps}
-																									elevation="1"
-																									className="mb-2 alert cursor-pointer rounded alert-info "
-																									ref={provded.innerRef}
-																								>
-																									<span className="mr-auto">
-																										{elx.name}
-																									</span>
-																									<span className="serial-number">
-																										serial : {el.serial_number}
-																									</span>
-																								</div>
-																							);
-																						}}
-																					</Draggable>
-																				) : null;
-																			}
-																		);
-																  })}
+																			) : null;
+																		}
+																	);
+																})}
 															{provided.placeholder}
 														</>
 													</div>
@@ -643,53 +685,71 @@ const DailogBox = ({
 																	<Autocomplete
 																		id="combo-box-demo"
 																		className="mt-4"
-																		options={items}
-																		onChange={(e, value) => {
+																		options={inventory}
+																		onChange={(e, value, action) => {
 																			const temp = dynamicForm[index];
 																			temp.selected = value;
 																			dynamicForm.splice(index, 1);
 																			dynamicForm.splice(index, 0, temp);
 																			setDynamicForm([...dynamicForm]);
 																		}}
+																		value={dynamicForm[index].selected}
 																		getOptionLabel={(option) => {
-																			return option.name;
+																			if (option && option.name)
+																				return option.name;
+																			else return "";
 																		}}
 																		renderInput={(params) => (
 																			<TextField
 																				label="Item"
 																				variant="outlined"
 																				{...params}
+																				value={dynamicForm[index].name}
 																			/>
 																		)}
 																	/>
 																</div>
-																<div className="col-sm-4">
-																	{/* <CustomeTextField
-																			error={error.includes("invoice number")}
-																			label="Serial Number"
-																			classes="mt-4"
-																			disable={true}
-																			keyName="serial_number"
-																			value={el.serial_number}
-																			index={el.id}
-																			onValueChange={onValueChangeDynamicForm}
-																		/> */}
-																	{el.selected ? (
+																{el.selected ? (
+																	<div className="col-sm-4">
 																		<Autocomplete
 																			id="combo-box-demo"
 																			className="mt-4"
 																			options={el.selected.serials}
-																			onChange={(e, value) => {
-																				const temp = dynamicForm[index];
-																				console.log(temp);
-																				temp.serial_number = value;
-																				dynamicForm.splice(index, 1);
-																				dynamicForm.splice(index, 0, temp);
-																				setDynamicForm([...dynamicForm]);
+																			getOptionLabel={(option, value) => {
+																				if (option && option.serial_number)
+																					return option.serial_number;
+																				else return "";
 																			}}
-																			getOptionLabel={(option) => {
-																				return option.serial_number;
+																			onChange={(evt, value, action) => {
+																				console.log(value);
+																				if (action === "clear") {
+																					let current = dynamicForm[index].serial_number;
+																					const currentSelected = dynamicForm[index].selected;
+																					const inventoryItemIndex = inventory.filter((item) => item.id === currentSelected.id);
+																					currentSelected.serials = [...currentSelected.serials, current];
+																					dynamicForm[index].serial_number = "";
+																					inventory.splice(inventoryItemIndex, 0);
+																					inventory.splice(
+																						inventoryItemIndex, 0, currentSelected
+																					);
+																					setInventory([...inventoryItemIndex]);
+																					setDynamicForm([...dynamicForm]);
+																				}
+																				try {
+																					const currentSelected =
+																						dynamicForm[index].selected;
+																					const selectItemIndex = currentSelected.serials.findIndex((serial) => serial.id === value.id);
+																					currentSelected.serials.splice(selectItemIndex, 1);
+																					dynamicForm[
+																						index
+																					].serial_number = value;
+																					setDynamicForm([...dynamicForm]);
+																					return value.serial_number;
+																				} catch (error) {
+																					return ""
+																				}
 																			}}
+																			value={el.serial_number}
 																			renderInput={(params) => (
 																				<TextField
 																					label="Serial Number"
@@ -698,31 +758,39 @@ const DailogBox = ({
 																				/>
 																			)}
 																		/>
-																	) : null}
-																</div>
-																<div className="col-sm-3">
-																	{el.selected ? (
-																		<CustomeTextField
-																			error={error.includes("invoice number")}
-																			label="Serial Number"
-																			classes="mt-4"
-																			keyName="qty"
+																	</div>
+																) : null}
+																{el.serial_number ? (
+																	<div className="col-sm-3">
+																		<TextField
+																			id={"title"}
+																			label="Quantity"
+																			className={`mb-16 mt-4`}
+																			InputLabelProps={{
+																				shrink: true,
+																			}}
+																			type="number"
+																			name="qty"
+																			variant="outlined"
+																			required
+																			fullWidth
 																			value={el.qty}
-																			index={el.id}
-																			onValueChange={onValueChangeDynamicForm}
+																			onChange={(e) =>
+																				onValueChangeDynamicForm(
+																					e,
+																					"qty",
+																					el.id
+																				)
+																			}
 																		/>
-																	) : null}
-																</div>
-																<div className="col-sm-1 d-flex align-items-end">
+																	</div>
+																) : null}
+																<div className="col-sm-1 d-flex align-items-end justify-content-end">
 																	<IconButton
 																		className="mt-3 bg-danger shadow mb-2"
 																		onClick={(e) => {
-																			const index = dynamicForm.filter(
-																				(elx) => elx._id === el._id
-																			)[2];
-																			const temp = dynamicForm;
-																			temp.splice(index, 1);
-																			setDynamicForm([...temp]);
+																			dynamicForm.splice(index, 1);
+																			setDynamicForm([...dynamicForm]);
 																		}}
 																	>
 																		<CloseRounded className="text-white">
@@ -742,14 +810,15 @@ const DailogBox = ({
 																	id: dynamicForm.length,
 																	selected: "",
 																	serial_number: "",
-																	qty: "",
+																	qty: 1,
+																	assign: false
 																},
 															])
 														}
 													>
 														<AddRounded className="text-white">Add</AddRounded>
 													</IconButton>
-													{!lock ? (
+													{/* {!lock ? (
 														<IconButton
 															className="mt-3 bg-success shadow mb-3 ml-2"
 															onClick={(e) => {
@@ -772,7 +841,7 @@ const DailogBox = ({
 																Add
 															</LockOpenRounded>
 														</IconButton>
-													)}
+													)} */}
 												</div>
 											);
 										}}
@@ -794,20 +863,20 @@ const DailogBox = ({
 						</Button>
 					</DialogActions>
 				) : (
-					<DialogActions className="justify-content-between pl-4 pl-16 mb-2">
-						<Button
-							onClick={editEventDetail}
-							variant="contained"
-							color="primary"
-						>
-							{" "}
+						<DialogActions className="justify-content-between pl-4 pl-16 mb-2">
+							<Button
+								onClick={editEventDetail}
+								variant="contained"
+								color="primary"
+							>
+								{" "}
 							Save
 						</Button>
-						<IconButton>
-							<Icon>delete</Icon>
-						</IconButton>
-					</DialogActions>
-				)}
+							<IconButton>
+								<Icon>delete</Icon>
+							</IconButton>
+						</DialogActions>
+					)}
 			</Dialog>
 		</DragDropContext>
 	);

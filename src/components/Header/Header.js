@@ -25,12 +25,9 @@ const Header = ({ setOpen }) => {
 			<div className="collapse navbar-collapse">
 				<ul className="navbar-nav mr-auto">
 					<li>
-						<a
-							href="#!"
-							className="full-screen font-weight-bold text-uppercase"
-						>
+						<span className="full-screen font-weight-bold text-uppercase geb ls-2">
 							Scheduler
-						</a>
+						</span>
 					</li>
 					{/* <li className="nav-item">
 						<div className="dropdown">
