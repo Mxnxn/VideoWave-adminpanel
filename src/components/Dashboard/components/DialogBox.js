@@ -110,14 +110,16 @@ const DailogBox = ({
 				const assignedItems = edit.items;
 				assignedItems.forEach((assignedItem, index) => {
 					items.forEach((item) => {
-						const filterArr = item.serials.filter((serial) => assignedItem.id !== serial.id && assignedItem.item_id === serial.item_id);
-						item.serials = filterArr;
-						temp.push({
-							id: index,
-							selected: item,
-							qty: assignedItem.assigned_quantity,
-							serial_number: assignedItem,
-						});
+						if(assignedItem.item_id === item.id){
+							const filterArr = item.serials.filter((serial) => assignedItem.id !== serial.id && assignedItem.item_id === serial.item_id);
+							item.serials = filterArr;
+							temp.push({
+								id: index,
+								selected: item,
+								qty: assignedItem.assigned_quantity,
+								serial_number: assignedItem,
+							});
+						}
 					})
 				})
 				setInventory([...items]);
@@ -721,7 +723,6 @@ const DailogBox = ({
 																				else return "";
 																			}}
 																			onChange={(evt, value, action) => {
-																				console.log(value);
 																				if (action === "clear") {
 																					let current = dynamicForm[index].serial_number;
 																					const currentSelected = dynamicForm[index].selected;
@@ -734,6 +735,11 @@ const DailogBox = ({
 																					);
 																					setInventory([...inventoryItemIndex]);
 																					setDynamicForm([...dynamicForm]);
+																				}else if(action === "select-option" && dynamicForm[index].serial_number){
+																					const currentSerialItem = dynamicForm[index].serial_number;
+																					const currentSelected = dynamicForm[index].selected;
+																					currentSelected.serials = [...currentSelected.serials,currentSerialItem];
+																					dynamicForm[index].serial_number = ""
 																				}
 																				try {
 																					const currentSelected =
