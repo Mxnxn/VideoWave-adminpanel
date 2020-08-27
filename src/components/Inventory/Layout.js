@@ -118,11 +118,11 @@ const Layout = (props) => {
 		}
 	}, [selected]);
 
-	return loading ? (
+	return (
 		<div className="fullscreen">
 			<Navbar />
 			<div className="pcoded-main-container">
-				<div className="main-body">
+				{loading ? <div className="main-body">
 					<div className="d-flex">
 						<div className="bg-sidebar">
 							<ul>
@@ -166,18 +166,18 @@ const Layout = (props) => {
 															Available
 														</span>
 													) : (
-														<div
-															className="d-flex f-row w-100 mt-auto "
-															style={{ margin: 0 }}
-														>
-															<span className="badge badge-warning  mr-1">
-																Engaged
+															<div
+																className="d-flex f-row w-100 mt-auto "
+																style={{ margin: 0 }}
+															>
+																<span className="badge badge-warning  mr-1">
+																	Engaged
 															</span>
-															<span className="badge badge-warning  mr-auto">
-																event: will be displayed
+																<span className="badge badge-warning  mr-auto">
+																	event: will be displayed
 															</span>
-														</div>
-													)}
+															</div>
+														)}
 												</div>
 												<div className="qr-area">
 													<img
@@ -190,19 +190,19 @@ const Layout = (props) => {
 									</div>
 								</div>
 							) : (
-								<div
-									className="d-flex align-items-center justify-content-center h-100 geb text-uppercase ls-1"
-									style={{ flex: 1, letterSpacing: "2px", fontSize: "14px" }}
-								>
-									Please select item
-								</div>
-							)}
+									<div
+										className="d-flex align-items-center justify-content-center h-100 geb text-uppercase ls-1"
+										style={{ flex: 1, letterSpacing: "2px", fontSize: "14px" }}
+									>
+										Please select item
+									</div>
+								)}
 						</div>
 					</div>
-				</div>
+				</div> : null}
 			</div>
 		</div>
-	) : null;
+	);
 };
 
 export default Layout;

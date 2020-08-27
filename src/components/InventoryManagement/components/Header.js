@@ -49,7 +49,7 @@ const Header = ({ heading, setOpenAddModal }) => {
 								<Tooltip title="To add a item using these!" placement="left">
 									<Button onClick={e => setOpenAddModal(prev => !prev)} variant="outlined" color="Primary" style={{ outline: "none" }} startIcon={<AddRounded />}>
 										Add New Item
-                            </Button>
+                            		</Button>
 								</Tooltip>
 							</MuiThemeProvider>
 						</div>

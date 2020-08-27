@@ -24,10 +24,7 @@ const Navbar = (props) => {
 			<div className="navbar-wrapper">
 				<div className="navbar-brand header-logo">
 					<Link to="/" className="b-brand">
-						<div className="b-bg">
-							<TrendingUp />
-						</div>
-						<span className="b-title">VideoWaves</span>
+						<img src={require("../../assets/Logo.jpeg")} style={{ height: "50px" }} />
 					</Link>
 					<p className="mobile-menu" id="mobile-collapse">
 						<span></span>
