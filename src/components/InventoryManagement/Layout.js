@@ -8,7 +8,7 @@ import { AppBar, Toolbar, Typography, IconButton, Dialog, DialogContent } from "
 import { CloseRounded } from "@material-ui/icons";
 import AlertDanger from "../Utils/AlertDanger";
 const InventoryManagement = (props) => {
-	const items = [0, 1, 2, 3, 4, 56, 7, 8, 9, 0, 12, 31, 5415, 151, 6, 1, 12, 31, 3, 1, 14, 16, 16, 161, 61, 61];
+	const items = ["SHARP 2500 LUMENS SR.NO5 WHITE", "SEAMLESS SWITCHER", "PROCESSOR & CONTROLLER", "CAT-6 TRANSMITTER", "VENUSX1PRO", "4K FIBER CABLE"];
 
 	const [error] = useState(false);
 	const [openAddModal, setOpenAddModal] = useState(false);
@@ -59,7 +59,10 @@ const InventoryManagement = (props) => {
 												<Typography></Typography>
 											</div>
 										</div>
-									</div></div></div></div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</DialogContent>
 				</Dialog>
 			</div>

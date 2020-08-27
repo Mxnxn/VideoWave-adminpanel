@@ -25,7 +25,7 @@ const Header = ({ heading }) => {
 			<div className="collapse navbar-collapse">
 				<ul className="navbar-nav mr-auto">
 					<li>
-						<span className="full-screen font-weight-bold text-uppercase geb ls-2">
+						<span className="full-screen font-weight-bold text-uppercase geb ls-1 fs-18">
 							{heading}
 						</span>
 					</li>
