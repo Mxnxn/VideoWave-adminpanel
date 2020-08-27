@@ -5,7 +5,7 @@ import {
 	MoreHorizontal,
 	ChevronDown,
 } from "react-feather";
-const Header = ({ setOpen }) => {
+const Header = ({ heading }) => {
 	return (
 		<header className="navbar pcoded-header navbar-expand-lg header-default">
 			<div className="m-header">
@@ -26,7 +26,7 @@ const Header = ({ setOpen }) => {
 				<ul className="navbar-nav mr-auto">
 					<li>
 						<span className="full-screen font-weight-bold text-uppercase geb ls-2">
-							Scheduler
+							{heading}
 						</span>
 					</li>
 					{/* <li className="nav-item">
@@ -72,7 +72,6 @@ const Header = ({ setOpen }) => {
 						<div className="drp-user dropdown ">
 							<button
 								style={{ lineHeight: 0 }}
-								onClick={(e) => setOpen((prev) => !prev)}
 								aria-haspopup="true"
 								aria-expanded="false"
 								id="dropdown-basic"

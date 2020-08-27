@@ -5,11 +5,11 @@ import Header from "../Header/Header";
 // import StatsCard from "../Header/StatsCard";
 // import FullScreenDialogBox from "./components/FullScreenDialogBox";
 const DashboardLayout = (props) => {
-	// const [open, setopen] = useState(false);
+	
 	return (
 		<div className="fullscreen">
-			<Navbar />
-			<Header />
+			<Navbar  />
+			<Header heading={"Scheduler"}/>
 			<div className="pcoded-main-container">
 				<div className="pcoded-wrapper">
 					<div className="pcoded-content">

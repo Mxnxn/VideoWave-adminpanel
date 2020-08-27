@@ -52,7 +52,6 @@ const DailogBox = ({
 
 	const [inventory, setInventory] = useState(items);
 	const [dynamicForm, setDynamicForm] = useState([]);
-	const [copyDynamicForm, setCopyDynamicForm] = useState([]);
 	const [form, setForm] = useState(
 		edit
 			? {
@@ -91,22 +90,6 @@ const DailogBox = ({
 		try {
 			if (edit && edit.items.length > 0) {
 				let temp = [];
-				// edit.items.forEach((el, index) => {
-				// 	for (let i = 0; i < items.length; i++) {
-				// 		if (items[i].id === el.id) {
-				// 			const alternateItems = items[i].serials.filter(
-				// 				(elem) => elem.id !== el.id
-				// 			);
-				// 			items[i].serials = alternateItems;
-				// temp.push({
-				// 	id: index,
-				// 	selected: items[i],
-				// 	qty: el.assigned_quantity,
-				// 	serial_number: el,
-				// });
-				// 		}
-				// 	}
-				// });
 				const assignedItems = edit.items;
 				assignedItems.forEach((assignedItem, index) => {
 					items.forEach((item) => {
@@ -126,6 +109,7 @@ const DailogBox = ({
 				setDynamicForm([...temp]);
 			}
 		} catch (error) { }
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const [copyForm] = useState(form);
@@ -292,10 +276,6 @@ const DailogBox = ({
 		console.log("Original Arr : ", dynamicForm);
 	}, [dynamicForm]);
 
-	useEffect(() => {
-		console.log("Copy arr : ", copyDynamicForm);
-	}, [copyDynamicForm]);
-
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Dialog fullWidth maxWidth="lg" open={open} component="form">
@@ -312,7 +292,6 @@ const DailogBox = ({
 						</IconButton>
 					</Toolbar>
 				</AppBar>
-
 				<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
 					<AlertDanger error={error} />
 					<div className="d-flex flex-wrap">

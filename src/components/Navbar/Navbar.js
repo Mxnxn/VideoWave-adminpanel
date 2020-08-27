@@ -1,7 +1,16 @@
-import React from "react";
-import { TrendingUp, Home, Package } from "react-feather";
+import React
+// , { useState } 
+from "react";
+import { TrendingUp, Home, Package, PlusSquare, Sliders } from "react-feather";
 import { Link } from "react-router-dom";
+// import { DialogContent, Dialog, AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
+// import { CloseRounded } from "@material-ui/icons";
+// import AlertDanger from "../Utils/AlertDanger"
 const Navbar = (props) => {
+
+	// const [openAddModal, setOpenAddModal] = useState(false);
+	// const [error, setError] = useState(false);
+
 	const setActive = (path) => {
 		const temp = window.location.pathname;
 		if (temp === path) {
@@ -50,7 +59,25 @@ const Navbar = (props) => {
 									</span>
 								</li>
 							</Link>
-							{/*<li className="nav-item pcoded-hasmenu pcoded-trigger">
+							<Link to="/manage/inventory">
+								<li>
+									<span className={setActive("/manage/inventory")} aria-current="page">
+										<span className="pcoded-micon">
+											<Sliders />
+										</span>
+										<span className="pcoded-mtext">Manage Inventory</span>
+									</span>
+								</li>
+							</Link>
+							{/*<li onClick={(e)=>{setOpenAddModal(!openAddModal)}} className="cursor-pointer">
+								<span className={openAddModal ? "nav-link active":"nav-link"} aria-current="page">
+									<span className="pcoded-micon">
+										<PlusSquare />
+									</span>
+									<span className="pcoded-mtext">Add New Item</span>
+								</span>
+							</li>
+							<li className="nav-item pcoded-hasmenu pcoded-trigger">
 								 <Link to="/" className="nav-link ">
 									<span className="pcoded-micon">
 										<Home />
@@ -87,6 +114,30 @@ const Navbar = (props) => {
 					</div>
 				</div>
 			</div>
+			{/* <Dialog fullWidth maxWidth="sm" open={openAddModal} component="form">
+				<AppBar position="static" className="bg-dark">
+					<Toolbar className="flex  w-full">
+						<Typography variant="subtitle1" color="inherit">
+							Add Item
+						</Typography>
+						<IconButton
+							className="ml-auto text-white"
+							onClick={(e) => setOpenAddModal(false)}
+						>
+							<CloseRounded />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+				<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
+					<AlertDanger error={error} />
+						<div className="d-flex flex-wrap">
+							<div
+							className="col-sm-4"
+							style={{ borderRight: "1px solid #f5f5f5" }}
+							></div>
+						</div>
+				</DialogContent>
+			</Dialog> */}
 		</nav>
 	);
 };
