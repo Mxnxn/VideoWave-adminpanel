@@ -856,7 +856,7 @@ const DailogBox = ({
 							>
 								{" "}
 							Save
-						</Button>
+							</Button>
 							<IconButton>
 								<Icon>delete</Icon>
 							</IconButton>

@@ -17,7 +17,7 @@ const theme = createMuiTheme({
 	}
 });
 
-const Header = ({ heading, setOpenAddModal }) => {
+const Header = ({ heading, setModal }) => {
 	return (
 		<header className="navbar pcoded-header navbar-expand-lg header-default">
 			<div className="m-header">
@@ -47,7 +47,7 @@ const Header = ({ heading, setOpenAddModal }) => {
 						<div className="drp-user dropdown  mr-4">
 							<MuiThemeProvider theme={theme}>
 								<Tooltip title="To add a item using these!" placement="left">
-									<Button onClick={e => setOpenAddModal(prev => !prev)} variant="outlined" color="Primary" style={{ outline: "none" }} startIcon={<AddRounded />}>
+									<Button onClick={e => setModal("addItem")} variant="outlined" color="Primary" style={{ outline: "none" }} startIcon={<AddRounded />}>
 										Add New Item
                             		</Button>
 								</Tooltip>

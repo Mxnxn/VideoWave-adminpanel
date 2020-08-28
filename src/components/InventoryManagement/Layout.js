@@ -4,18 +4,83 @@ import Header from "./components/Header";
 import ItemsCategories from "./components/ItemsCategories";
 import ItemsTypes from "./components/ItemsTypes";
 import ItemsClasses from "./components/ItemsClasses";
-import { AppBar, Toolbar, Typography, IconButton, Dialog, DialogContent } from "@material-ui/core";
-import { CloseRounded } from "@material-ui/icons";
-import AlertDanger from "../Utils/AlertDanger";
+import AddModal from "./components/AddModal";
+
 const InventoryManagement = (props) => {
 	const items = ["SHARP 2500 LUMENS SR.NO5 WHITE", "SEAMLESS SWITCHER", "PROCESSOR & CONTROLLER", "CAT-6 TRANSMITTER", "VENUSX1PRO", "4K FIBER CABLE"];
 
-	const [error] = useState(false);
-	const [openAddModal, setOpenAddModal] = useState(false);
+	const initModalsState = {
+		addCategory:false,
+		addType : false,
+		addClass: false,
+		addItem:false
+	}
+
+	const initState = {
+		item:{
+			category:"",
+			type:"",
+			class:"",
+			value:""
+		},
+		category:"",
+		class:"",
+		type:""
+	}
+
+	const initDelete = {
+		category:false,
+		item:false,
+		type:false,
+		class:false
+	}
+
+	const [error,setError] = useState(initDelete);
+	const [state, setState] = useState(initState);
+	const [modals, setModals] = useState(initModalsState);
+
+	const onCancelHandler = () => {
+		setModals(initModalsState)
+	}
+
+	const modalOpener = (which) => {
+		setModals({...modals,[which]:true});
+	}
+
+	const onSubmitCategory = () => {
+		if(!state.category ){
+			return setError({...error,category:"Please enter a category name!"});
+		}
+		console.log(state.category);
+	}
+
+	const onSubmitItems = () => {
+		
+	}
+
+	const onSubmitType = () => {
+		if(!state.type){
+			return setError({...error,type:"Please enter a type name!"});
+		}
+		console.log(state.type);
+	}
+
+	const onSubmitClass = () => {
+		if(!state.class){
+			return setError({...error,class:"Please enter a class name!"});
+		}
+		console.log(state.class);
+	}
+
+	const onValueChange = (e) => {
+		console.log(e.target.name,e.target.value);
+		setState({...state,[e.target.name]:e.target.value})
+	}	
+
 	return (
 		<div className="fullscreen">
 			<Navbar />
-			<Header heading={"Management"} setOpenAddModal={setOpenAddModal} />
+			<Header heading={"Management"} setModal={modalOpener} />
 			<div className="pcoded-main-container" style={{ height: "100vh", minHeight: "100vh" }}>
 				<div className="pcoded-wrapper" >
 					<div className="pcoded-content">
@@ -23,48 +88,20 @@ const InventoryManagement = (props) => {
 							<div className="main-body">
 								<div className="row fix-h-85">
 									<div className="col-lg-4 h-100">
-										<ItemsClasses items={items} />
+										<ItemsClasses items={items} setModal={modalOpener} />
 									</div>
 									<div className="col-lg-8 h-100   d-flex flex-column ">
-										<ItemsCategories items={items} />
-										<ItemsTypes items={items} />
+										<ItemsCategories items={items} setModal={modalOpener} />
+										<ItemsTypes items={items} setModal={modalOpener} />
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<Dialog fullWidth maxWidth="sm" open={openAddModal} component="form">
-					<AppBar position="static" className="bg-dark">
-						<Toolbar className="flex  w-full">
-							<Typography variant="subtitle1" color="inherit">
-								Add Items
-							</Typography>
-							<IconButton onClick={e => setOpenAddModal(false)} className="ml-auto text-white">
-								<CloseRounded />
-							</IconButton>
-						</Toolbar>
-					</AppBar>
-					<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
-						<AlertDanger error={error} />
-						<div className="d-flex flex-wrap">
-							<div
-								className="col-sm-4"
-								style={{ borderRight: "1px solid #f5f5f5" }}
-							>
-								<div className="row">
-									<div className="col-sm-12">
-										<div className="row">
-											<div className="col-sm-12">
-												<Typography></Typography>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</DialogContent>
-				</Dialog>
+				<AddModal error={error.type} modal={modals.addType}  onValueChange={onValueChange} state={state} keyName="type" submitHandler={onSubmitType} title="Add Type" onCancelHandler={onCancelHandler}/>
+				<AddModal error={error.category} modal={modals.addCategory}  onValueChange={onValueChange} state={state} submitHandler={onSubmitCategory} keyName="category" title="Add Category"  onCancelHandler={onCancelHandler}/>
+				<AddModal error={error.class} modal={modals.addClass} onValueChange={onValueChange} state={state} keyName="class" title="Add Class" submitHandler={onSubmitClass} onCancelHandler={onCancelHandler}/>
 			</div>
 		</div>
 	);

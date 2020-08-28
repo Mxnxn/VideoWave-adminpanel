@@ -1,21 +1,13 @@
 import React, { useState }
 	from "react";
-import { Home, Package, Sliders, Minimize2, Sidebar } from "react-feather";
+import { Home, Package, Sliders } from "react-feather";
 import { Link } from "react-router-dom";
-import { ExpandMoreRounded, Widgets } from "@material-ui/icons";
-import { IconButton } from "@material-ui/core";
 import SidebarLink from "./SidebarLink";
-// import { DialogContent, Dialog, AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
-// import { CloseRounded } from "@material-ui/icons";
-// import AlertDanger from "../Utils/AlertDanger"
+import { CastConnectedRounded } from "@material-ui/icons";
+
 const Navbar = (props) => {
 
-	// const [openAddModal, setOpenAddModal] = useState(false);
-	// const [error, setError] = useState(false);
-
-	const [toggleNavBar, setToggleNavBar] = useState(false);
-
-
+	const [toggleNavBar, setToggleNavBar] = useState(window.localStorage.getItem("switchView") ? Boolean(window.localStorage.getItem("switchView")) : false);
 
 	const classesNavbar = "pcoded-navbar  menu-light navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default  title-default"
 
@@ -23,11 +15,23 @@ const Navbar = (props) => {
 		<nav className={toggleNavBar ? "nav-barx navbar-collapsed " + classesNavbar : classesNavbar}>
 			<div className="navbar-wrapper">
 				<div className="navbar-brand header-logo">
-					<Link to="/" className="b-brand">
+					{toggleNavBar ? (<span href="" className="b-brand">
+						<div style={{    borderRadius:" 10px",
+										width:" 35px",
+										height:" 35px",
+										display: "inline-flex",
+										alignItems: "center",
+										justifyContent: "center"
+						}}>
+							<CastConnectedRounded fontSize="large" style={{color:"white"}}/>
+						</div>
+						<span className="b-title">VideoWaves</span>
+					</span>) 
+					:(<Link to="/" className="b-brand">
 						<img src={require("../../assets/Logo.jpeg")} style={{ height: "50px" }} alt="Logo" />
-					</Link>
-
-					<p className={toggleNavBar ? "mobile-menu on " : "mobile-menu cursor-pointer"} id="mobile-collapse" onClick={e => setToggleNavBar(prev => !prev)}>
+					</Link>)
+					}
+					<p className={toggleNavBar ? "mobile-menu on cursor-pointer " : "mobile-menu cursor-pointer"} id="mobile-collapse" onClick={e => {setToggleNavBar(!toggleNavBar); window.localStorage.setItem("switchView",!toggleNavBar) }}>
 						<span></span>
 					</p>
 				</div>
@@ -85,30 +89,7 @@ const Navbar = (props) => {
 					</div>
 				</div>
 			</div>
-			{/* <Dialog fullWidth maxWidth="sm" open={openAddModal} component="form">
-				<AppBar position="static" className="bg-dark">
-					<Toolbar className="flex  w-full">
-						<Typography variant="subtitle1" color="inherit">
-							Add Item
-						</Typography>
-						<IconButton
-							className="ml-auto text-white"
-							onClick={(e) => setOpenAddModal(false)}
-						>
-							<CloseRounded />
-						</IconButton>
-					</Toolbar>
-				</AppBar>
-				<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
-					<AlertDanger error={error} />
-						<div className="d-flex flex-wrap">
-							<div
-							className="col-sm-4"
-							style={{ borderRight: "1px solid #f5f5f5" }}
-							></div>
-						</div>
-				</DialogContent>
-			</Dialog> */}
+			
 		</nav>
 	);
 };
