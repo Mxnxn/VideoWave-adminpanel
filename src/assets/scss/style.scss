@@ -52,7 +52,7 @@
 
 @import "../feather/icon-font.css";
 // important Element
-@import "menu/menu-lite";
+@import "./menu/menu-lite";
 
 // Theme Element
 @import "theme-elements/form";
@@ -162,7 +162,7 @@
 
 .bg-sidebar {
 	display: block !important;
-	z-index: 1029 !important;
+	z-index: 1020 !important;
 	// position: fixed !important;
 	transition: all 0.3s ease-in-out !important;
 	width: 30% !important;
@@ -390,3 +390,25 @@
   ::-webkit-scrollbar-thumb:hover {
 	background: #555; 
   }
+
+  .nav-barx{
+
+	&:not(:hover){
+		#nav-link-mtext{
+			-webkit-transform: rotateY(-90deg);
+			transform: rotateY(-90deg);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			opacity: 0;
+			-webkit-transition: all .3s ease-in-out;
+			transition: all .3s ease-in-out;
+			font-size:17px;
+			}
+
+		
+	}
+	.fs-17{
+		font-size:17px;
+	}
+  }
+  

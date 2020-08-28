@@ -1,8 +1,10 @@
-import React
-	// , { useState } 
+import React, { useState }
 	from "react";
-import { TrendingUp, Home, Package, Sliders } from "react-feather";
+import { Home, Package, Sliders, Minimize2, Sidebar } from "react-feather";
 import { Link } from "react-router-dom";
+import { ExpandMoreRounded, Widgets } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import SidebarLink from "./SidebarLink";
 // import { DialogContent, Dialog, AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
 // import { CloseRounded } from "@material-ui/icons";
 // import AlertDanger from "../Utils/AlertDanger"
@@ -11,22 +13,21 @@ const Navbar = (props) => {
 	// const [openAddModal, setOpenAddModal] = useState(false);
 	// const [error, setError] = useState(false);
 
-	const setActive = (path) => {
-		const temp = window.location.pathname;
-		if (temp === path) {
-			return "nav-link active";
-		}
-		return "nav-link";
-	};
+	const [toggleNavBar, setToggleNavBar] = useState(false);
+
+
+
+	const classesNavbar = "pcoded-navbar  menu-light navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default  title-default"
 
 	return (
-		<nav className="pcoded-navbar menu-dark navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default title-default">
+		<nav className={toggleNavBar ? "nav-barx navbar-collapsed " + classesNavbar : classesNavbar}>
 			<div className="navbar-wrapper">
 				<div className="navbar-brand header-logo">
 					<Link to="/" className="b-brand">
-						<img src={require("../../assets/Logo.jpeg")} style={{ height: "50px" }} />
+						<img src={require("../../assets/Logo.jpeg")} style={{ height: "50px" }} alt="Logo" />
 					</Link>
-					<p className="mobile-menu" id="mobile-collapse">
+
+					<p className={toggleNavBar ? "mobile-menu on " : "mobile-menu cursor-pointer"} id="mobile-collapse" onClick={e => setToggleNavBar(prev => !prev)}>
 						<span></span>
 					</p>
 				</div>
@@ -36,36 +37,9 @@ const Navbar = (props) => {
 							<li className="nav-item pcoded-menu-caption">
 								<label>Navigation</label>
 							</li>
-							<Link to="/">
-								<li>
-									<span className={setActive("/")} aria-current="page">
-										<span className="pcoded-micon">
-											<Home />
-										</span>
-										<span className="pcoded-mtext">Dashboard</span>
-									</span>
-								</li>
-							</Link>
-							<Link to="/inventory">
-								<li>
-									<span className={setActive("/inventory")} aria-current="page">
-										<span className="pcoded-micon">
-											<Package />
-										</span>
-										<span className="pcoded-mtext">Inventory</span>
-									</span>
-								</li>
-							</Link>
-							<Link to="/manage/inventory">
-								<li>
-									<span className={setActive("/manage/inventory")} aria-current="page">
-										<span className="pcoded-micon">
-											<Sliders />
-										</span>
-										<span className="pcoded-mtext">Manage Inventory</span>
-									</span>
-								</li>
-							</Link>
+							<SidebarLink toggleNavBar={toggleNavBar} path="/" name="Dashboard" icon={Home} />
+							<SidebarLink toggleNavBar={toggleNavBar} path="/inventory" name="Inventory" icon={Package} />
+							<SidebarLink toggleNavBar={toggleNavBar} path="/manage/inventory" name="Manage Inventory" icon={Sliders} />
 							{/*<li onClick={(e)=>{setOpenAddModal(!openAddModal)}} className="cursor-pointer">
 								<span className={openAddModal ? "nav-link active":"nav-link"} aria-current="page">
 									<span className="pcoded-micon">

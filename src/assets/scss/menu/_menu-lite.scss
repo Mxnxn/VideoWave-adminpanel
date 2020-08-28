@@ -747,7 +747,7 @@
 			}
 
 			&.pcoded-hasmenu {
-				> a {
+				> a, > span {
 					&:after {
 						content: "\e844";
 						font-family: "feather";
@@ -761,7 +761,7 @@
 				}
 
 				&.pcoded-trigger {
-					> a {
+					> a , > span {
 						&:after {
 							transform: rotate(90deg);
 						}
@@ -784,7 +784,7 @@
 
 				.pcoded-submenu {
 					li {
-						> a {
+						> a , > span {
 							text-align: left;
 							padding: 7px 7px 7px 60px;
 							margin: 0;
@@ -803,7 +803,7 @@
 
 						.pcoded-submenu {
 							> li {
-								> a {
+								> a , > span {
 									padding: 7px 7px 7px 80px;
 
 									&:before {
@@ -825,7 +825,7 @@
 			}
 
 			&.disabled {
-				> a {
+				> a, > span {
 					cursor: default;
 					opacity: 0.5;
 				}
@@ -915,7 +915,7 @@
 
 		.pcoded-inner-navbar {
 			> li {
-				> a {
+				> a , > span {
 					z-index: 1026;
 					padding: 7px 25px;
 
@@ -928,7 +928,7 @@
 				}
 
 				&.pcoded-hasmenu {
-					> a {
+					> a , > span {
 						&:after {
 							right: 12px;
 						}
@@ -1034,7 +1034,7 @@
 
 			.pcoded-inner-navbar {
 				> li {
-					> a {
+					> a , > span {
 						> .pcoded-mtext {
 							transform: rotateY(0deg);
 							opacity: 1;
@@ -1242,7 +1242,7 @@
 				padding: 0;
 				position: relative;
 
-				> a {
+				> span , > a {
 					margin: 0;
 					padding: 8px 15px;
 
@@ -1783,7 +1783,7 @@
 
 			.pcoded-inner-navbar {
 				> li {
-					> a {
+					> span, > a {
 						> .pcoded-mtext {
 							transition: none;
 						}
