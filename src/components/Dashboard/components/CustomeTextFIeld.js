@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
+import { Restaurant } from "@material-ui/icons";
 
 const CustomeTextField = ({
 	error,
@@ -11,6 +12,7 @@ const CustomeTextField = ({
 	disable,
 	classes,
 	onValueChange,
+	...rest
 }) => {
 	return error ? (
 		<TextField
@@ -18,13 +20,8 @@ const CustomeTextField = ({
 			error
 			label={label}
 			className={`mb-16 ${classes}`}
-			InputLabelProps={{
-				shrink: true,
-			}}
 			name={keyName}
 			variant="outlined"
-			autoFocus
-			required
 			fullWidth
 			value={value}
 			onChange={(e) => onValueChange(e, keyName, index)}
@@ -34,13 +31,9 @@ const CustomeTextField = ({
 			id={"title"}
 			label={label}
 			className={`mb-16 ${classes}`}
-			InputLabelProps={{
-				shrink: true,
-			}}
 			name={keyName}
+			{...rest}
 			variant="outlined"
-			autoFocus
-			required
 			fullWidth
 			value={value}
 			onChange={(e) => onValueChange(e, keyName, index)}

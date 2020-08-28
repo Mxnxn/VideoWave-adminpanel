@@ -24,17 +24,15 @@ const AddModal = ({onCancelHandler,modal,error,title,state,onValueChange,keyName
 								className="col-sm-12 p-0"
 								style={{ borderRight: "1px solid #f5f5f5" }}
 							>
-								
                                 <div className="alert alert-info w-100 rounded mt-2">Note: Enter it Properly, it will be used later!</div>
                                 <AlertDanger error={error} />
                                         <div className="row mt-1 mb-3 px-3">
-											
-                                                <CustomeTextField
-                                                    keyName={keyName}
-                                                    label={"Name"}
-                                                    value={state[keyName]}
-                                                    onValueChange={onValueChange}
-                                                />
+                                            <CustomeTextField
+                                                keyName={keyName}
+                                                label={"Name"}
+                                                value={state[keyName]}
+                                                onValueChange={onValueChange}
+                                            />
 										</div>
 							</div>
 						</div>

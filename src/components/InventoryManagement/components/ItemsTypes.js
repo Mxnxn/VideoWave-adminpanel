@@ -10,7 +10,7 @@ const ItemsTypes = ({ items,setModal }) => {
 
         </div>
         <div className="d-flex flex-wrap item-area pt-3" style={{ height: "82%", overflowY: "auto", overflowX: "none", alignContent: "start" }}>
-            {items.map((el, index) => <div style={{ maxWidth: "280px", width: "auto" }} className="d-flex h-60 m-2 b-bgx shadow-1 fira fs-14 cursor-pointer" ><span className="px-4 m-auto">{el}</span></div>)}
+            {items.map((el, index) => <div key={index} style={{ maxWidth: "280px", width: "auto" }} className="d-flex h-60 m-2 b-bgx shadow-1 fira fs-14 cursor-pointer" ><span className="px-4 m-auto">{el}</span></div>)}
             <Button onClick={e=>setModal("addType")} className="h-60 m-2 rounded text-white shadow-1" varient="cotained" style={{ background: "#04a9f5", outline: "none", borderRadius: 10 }} ><AddRounded /></Button>
         </div>
     </div>)

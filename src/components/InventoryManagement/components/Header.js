@@ -47,7 +47,7 @@ const Header = ({ heading, setModal }) => {
 						<div className="drp-user dropdown  mr-4">
 							<MuiThemeProvider theme={theme}>
 								<Tooltip title="To add a item using these!" placement="left">
-									<Button onClick={e => setModal("addItem")} variant="outlined" color="Primary" style={{ outline: "none" }} startIcon={<AddRounded />}>
+									<Button onClick={e => setModal("addItem")} variant="outlined" color="primary" style={{ outline: "none" }} startIcon={<AddRounded />}>
 										Add New Item
                             		</Button>
 								</Tooltip>

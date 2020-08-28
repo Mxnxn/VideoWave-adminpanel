@@ -5,6 +5,7 @@ import ItemsCategories from "./components/ItemsCategories";
 import ItemsTypes from "./components/ItemsTypes";
 import ItemsClasses from "./components/ItemsClasses";
 import AddModal from "./components/AddModal";
+import AddItemModal from "./components/AddItemModal";
 
 const InventoryManagement = (props) => {
 	const items = ["SHARP 2500 LUMENS SR.NO5 WHITE", "SEAMLESS SWITCHER", "PROCESSOR & CONTROLLER", "CAT-6 TRANSMITTER", "VENUSX1PRO", "4K FIBER CABLE"];
@@ -17,12 +18,6 @@ const InventoryManagement = (props) => {
 	}
 
 	const initState = {
-		item:{
-			category:"",
-			type:"",
-			class:"",
-			value:""
-		},
 		category:"",
 		class:"",
 		type:""
@@ -37,6 +32,12 @@ const InventoryManagement = (props) => {
 
 	const [error,setError] = useState(initDelete);
 	const [state, setState] = useState(initState);
+	const [existingItems,setExistingItems] = useState({
+		classes: ["Speed","Video","LED","Transistors","Anything"],
+		categories: ["Cat1","Cat2","Cat3"],
+		types: ["Type1","Type2","Type3","Type4","Type5"],
+	});
+
 	const [modals, setModals] = useState(initModalsState);
 
 	const onCancelHandler = () => {
@@ -79,7 +80,7 @@ const InventoryManagement = (props) => {
 
 	return (
 		<div className="fullscreen">
-			<Navbar />
+			<Navbar/>
 			<Header heading={"Management"} setModal={modalOpener} />
 			<div className="pcoded-main-container" style={{ height: "100vh", minHeight: "100vh" }}>
 				<div className="pcoded-wrapper" >
@@ -99,6 +100,11 @@ const InventoryManagement = (props) => {
 						</div>
 					</div>
 				</div>
+				<AddItemModal modal={modals.addItem}
+					stuffs={existingItems}
+					title={"Add Item"}
+					onCancelHandler={onCancelHandler}
+				/>
 				<AddModal error={error.type} modal={modals.addType}  onValueChange={onValueChange} state={state} keyName="type" submitHandler={onSubmitType} title="Add Type" onCancelHandler={onCancelHandler}/>
 				<AddModal error={error.category} modal={modals.addCategory}  onValueChange={onValueChange} state={state} submitHandler={onSubmitCategory} keyName="category" title="Add Category"  onCancelHandler={onCancelHandler}/>
 				<AddModal error={error.class} modal={modals.addClass} onValueChange={onValueChange} state={state} keyName="class" title="Add Class" submitHandler={onSubmitClass} onCancelHandler={onCancelHandler}/>
