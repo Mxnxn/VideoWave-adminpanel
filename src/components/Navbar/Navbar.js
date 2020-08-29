@@ -1,37 +1,69 @@
-import React, { useState }
-	from "react";
+import React, { useState } from "react";
 import { Home, Package, Sliders } from "react-feather";
 import { Link } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import { CastConnectedRounded } from "@material-ui/icons";
 
 const Navbar = (props) => {
+	const [toggleNavBar, setToggleNavBar] = useState(
+		window.localStorage.getItem("switchView")
+			? Boolean(window.localStorage.getItem("switchView"))
+			: false
+	);
 
-	const [toggleNavBar, setToggleNavBar] = useState(window.localStorage.getItem("switchView") ? Boolean(window.localStorage.getItem("switchView")) : false);
-
-	const classesNavbar = "pcoded-navbar  menu-light navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default  title-default"
+	const classesNavbar =
+		"pcoded-navbar  menu-light navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default  title-default";
 
 	return (
-		<nav className={toggleNavBar ? "nav-barx navbar-collapsed " + classesNavbar : classesNavbar}>
+		<nav
+			className={
+				toggleNavBar
+					? "nav-barx navbar-collapsed " + classesNavbar
+					: classesNavbar
+			}
+		>
 			<div className="navbar-wrapper">
 				<div className="navbar-brand header-logo">
-					{toggleNavBar ? (<span href="" className="b-brand">
-						<div style={{    borderRadius:" 10px",
-										width:" 35px",
-										height:" 35px",
-										display: "inline-flex",
-										alignItems: "center",
-										justifyContent: "center"
-						}}>
-							<CastConnectedRounded fontSize="large" style={{color:"white"}}/>
-						</div>
-						<span className="b-title">VideoWaves</span>
-					</span>) 
-					:(<Link to="/" className="b-brand">
-						<img src={require("../../assets/Logo.jpeg")} style={{ height: "50px" }} alt="Logo" />
-					</Link>)
-					}
-					<p className={toggleNavBar ? "mobile-menu on cursor-pointer " : "mobile-menu cursor-pointer"} id="mobile-collapse" onClick={e => {setToggleNavBar(!toggleNavBar); window.localStorage.setItem("switchView",!toggleNavBar) }}>
+					{toggleNavBar ? (
+						<span href="" className="b-brand">
+							<div
+								style={{
+									borderRadius: " 10px",
+									width: " 35px",
+									height: " 35px",
+									display: "inline-flex",
+									alignItems: "center",
+									justifyContent: "center",
+								}}
+							>
+								<CastConnectedRounded
+									fontSize="large"
+									style={{ color: "white" }}
+								/>
+							</div>
+							<span className="b-title">VideoWaves</span>
+						</span>
+					) : (
+						<Link to="/" className="b-brand">
+							<img
+								src={require("../../assets/Logo.jpeg")}
+								style={{ height: "50px" }}
+								alt="Logo"
+							/>
+						</Link>
+					)}
+					<p
+						className={
+							toggleNavBar
+								? "mobile-menu on cursor-pointer "
+								: "mobile-menu cursor-pointer"
+						}
+						id="mobile-collapse"
+						onClick={(e) => {
+							setToggleNavBar(!toggleNavBar);
+							window.localStorage.setItem("switchView", !toggleNavBar);
+						}}
+					>
 						<span></span>
 					</p>
 				</div>
@@ -41,9 +73,24 @@ const Navbar = (props) => {
 							<li className="nav-item pcoded-menu-caption">
 								<label>Navigation</label>
 							</li>
-							<SidebarLink toggleNavBar={toggleNavBar} path="/" name="Dashboard" icon={Home} />
-							<SidebarLink toggleNavBar={toggleNavBar} path="/inventory" name="Inventory" icon={Package} />
-							<SidebarLink toggleNavBar={toggleNavBar} path="/manage/inventory" name="Manage Inventory" icon={Sliders} />
+							<SidebarLink
+								toggleNavBar={toggleNavBar}
+								path="/"
+								name="Dashboard"
+								icon={Home}
+							/>
+							<SidebarLink
+								toggleNavBar={toggleNavBar}
+								path="/inventory"
+								name="Inventory"
+								icon={Package}
+							/>
+							<SidebarLink
+								toggleNavBar={toggleNavBar}
+								path="/manage/inventory"
+								name="Manage Inventory"
+								icon={Sliders}
+							/>
 							{/*<li onClick={(e)=>{setOpenAddModal(!openAddModal)}} className="cursor-pointer">
 								<span className={openAddModal ? "nav-link active":"nav-link"} aria-current="page">
 									<span className="pcoded-micon">
@@ -89,7 +136,6 @@ const Navbar = (props) => {
 					</div>
 				</div>
 			</div>
-			
 		</nav>
 	);
 };

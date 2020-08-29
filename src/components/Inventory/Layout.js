@@ -122,74 +122,77 @@ const Layout = (props) => {
 		<div className="fullscreen">
 			<Navbar />
 			<div className="pcoded-main-container">
-				{loading ? <div className="main-body">
-					<div className="d-flex">
-						<div className="bg-sidebar">
-							<ul>
-								<li className="font-weight-bold sidebar-top geb">Inventory</li>
-								<Classes
-									items={items}
-									onTapCategoryToggle={onTapCategoryToggle}
-									onTapTypeToggle={onTapTypeToggle}
-									onTapClassToggle={onTapClassToggle}
-									selected={selected}
-									setSelected={setSelected}
-								/>
-							</ul>
-						</div>
-						<div className="detail-view">
-							{selected ? (
-								<div className="d-flex flex-column  h-100 margin-20px ">
-									<div className="d-flex geb fs-24 mt-3 mb-3">
-										<span>{selected.name}</span>
-										<span className="ml-auto" style={{ marginRight: "5%" }}>
-											Available Quantity: {availableQty}
-										</span>
-									</div>
-									<div className="d-flex flex-wrap w-100 ">
-										{selected.serials.map((el, index) => (
-											<div className="d-flex  card-ivntry shadow-sm">
-												<div className="details d-flex flex-column">
-													<div className="d-flex  w-100 fira">
-														Serial : {el.serial_number}
-													</div>
-													<div
-														className="d-flex f-row w-100 "
-														style={{ margin: 0 }}
-													>
-														<span className="fira mt-3">
-															Name : {selected.name}
-														</span>
-													</div>
-													{Number(el.is_available) === 1 ? (
-														<span className="badge badge-success mt-auto mr-auto fira">
-															Available
-														</span>
-													) : (
+				{loading ? (
+					<div className="main-body">
+						<div className="d-flex">
+							<div className="bg-sidebar">
+								<ul>
+									<li className="font-weight-bold sidebar-top geb">
+										Inventory
+									</li>
+									<Classes
+										items={items}
+										onTapCategoryToggle={onTapCategoryToggle}
+										onTapTypeToggle={onTapTypeToggle}
+										onTapClassToggle={onTapClassToggle}
+										selected={selected}
+										setSelected={setSelected}
+									/>
+								</ul>
+							</div>
+							<div className="detail-view">
+								{selected ? (
+									<div className="d-flex flex-column  h-100 margin-20px ">
+										<div className="d-flex geb fs-24 mt-3 mb-3">
+											<span>{selected.name}</span>
+											<span className="ml-auto" style={{ marginRight: "5%" }}>
+												Available Quantity: {availableQty}
+											</span>
+										</div>
+										<div className="d-flex flex-wrap w-100 ">
+											{selected.serials.map((el, index) => (
+												<div className="d-flex  card-ivntry shadow-sm">
+													<div className="details d-flex flex-column">
+														<div className="d-flex  w-100 fira">
+															Serial : {el.serial_number}
+														</div>
+														<div
+															className="d-flex f-row w-100 "
+															style={{ margin: 0 }}
+														>
+															<span className="fira mt-3">
+																Name : {selected.name}
+															</span>
+														</div>
+														{Number(el.is_available) === 1 ? (
+															<span className="badge badge-success mt-auto mr-auto fira">
+																Available
+															</span>
+														) : (
 															<div
 																className="d-flex f-row w-100 mt-auto "
 																style={{ margin: 0 }}
 															>
 																<span className="badge badge-warning  mr-1">
 																	Engaged
-															</span>
+																</span>
 																<span className="badge badge-warning  mr-auto">
 																	event: will be displayed
-															</span>
+																</span>
 															</div>
 														)}
+													</div>
+													<div className="qr-area">
+														<img
+															src={`${process.env.REACT_APP_QR_PREFIX}${el.qrcode_path}`}
+															alt="qr"
+														/>
+													</div>
 												</div>
-												<div className="qr-area">
-													<img
-														src={`${process.env.REACT_APP_QR_PREFIX}${el.qrcode_path}`}
-														alt="qr"
-													/>
-												</div>
-											</div>
-										))}
+											))}
+										</div>
 									</div>
-								</div>
-							) : (
+								) : (
 									<div
 										className="d-flex align-items-center justify-content-center h-100 geb text-uppercase ls-1"
 										style={{ flex: 1, letterSpacing: "2px", fontSize: "14px" }}
@@ -197,9 +200,10 @@ const Layout = (props) => {
 										Please select item
 									</div>
 								)}
+							</div>
 						</div>
 					</div>
-				</div> : null}
+				) : null}
 			</div>
 		</div>
 	);
