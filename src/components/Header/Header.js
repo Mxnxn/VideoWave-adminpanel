@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	TrendingUp,
-	Settings,
 	MoreHorizontal,
-	ChevronDown,
+	LogOut,
+	Shield,
 } from "react-feather";
+import { Badge, IconButton } from "@material-ui/core";
+import { NotificationsActiveRounded,Settings, MoreVert, } from "@material-ui/icons";
+import Axios from "axios";
 const Header = ({ heading }) => {
+
+	const [popup, setPopup] = useState(false);
+	const [notifications, setNotifications] = useState(false);
+	const childPopupClass = "dropdown-menu dropdown-menu-right profile-notification";
+	const childNotifiClass = "dropdown-menu dropdown-menu-right notification";
+	const parentPopupClass = "drp-user dropdown";
+
+	const logout = async () => {
+		try {
+			const res = 
+			await Axios.post(`${process.env.REACT_APP_API_URL}/user/logout`,{},
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("session_token"),
+				},
+			});
+			if(res.data.code === 200){
+				window.localStorage.removeItem("session_token")
+				window.localStorage.removeItem("uid")
+				window.localStorage.removeItem("email")
+				window.location.reload();
+			}
+		} catch (error) {
+		}
+	}
+
 	return (
 		<header className="navbar pcoded-header navbar-expand-lg header-default">
 			<div className="m-header">
@@ -68,36 +97,78 @@ const Header = ({ heading }) => {
 					</li> */}
 				</ul>
 				<ul className="navbar-nav ml-auto ">
-					<li className="nav-item pr-0">
-						<div className="drp-user dropdown show">
+					<li className="nav-item p-0">
+						<div className={notifications ?"show dropdown":"dropdown"}>
 							<button
 								style={{ lineHeight: 0 }}
 								aria-haspopup="true"
 								aria-expanded="false"
 								id="dropdown-basic"
 								type="button"
+								onClick={e=>setNotifications(!notifications)}
 								className="dropdown-toggle btn btn-link "
 							>
-								<Settings />
-								<ChevronDown size="16" className="ml-1" />
+								<IconButton>
+									<Badge color="primary" badgeContent=" " variant="dot">
+										<NotificationsActiveRounded size="large"/>
+									</Badge>
+								</IconButton>
 							</button>
-							<div class="dropdown-menu dropdown-menu-right profile-notification show" style={{marginRight:40}}>
-								<div class="pro-head">
-									<img src={require("../../assets/plain.png")} style={{height:42,width:42}} class="img-radius" alt="User-Profile-Image"/>
-									<span>John Doe</span>
-									<a href="auth-signin.html" class="dud-logout" title="Logout">
-										<i class="feather icon-log-out"></i>
-									</a>
+							<div className={notifications ? `${childNotifiClass} show`:childNotifiClass} style={{marginRight:24}}>
+								<div className="noti-head">
+									<h6 className="d-inline-block m-b-0">Notifications</h6>
+									<div className="float-right">
+										<a href="#!" className="m-r-10">mark as read</a>
+										<a href="#!">clear all</a>
+									</div>
 								</div>
-								<ul class="pro-body">
-									<li><a href="#!" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
-									<li><a href="#!" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-									<li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
-									<li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
+								<ul className="noti-body">
+									<li className="n-title">
+										<p className="m-b-0">NEW</p>
+									</li>
+									<li className="notification">
+										<div className="media">
+										<img className="img-radius"  src={require("../../assets/plain.png")} alt="Generic placeholder image" />
+										<div className="media-body">
+										<p><strong>John Doe</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10"></i>30 min</span></p>
+										<p>New ticket Added</p>
+										</div>
+										</div>
+									</li>
+								</ul>	
+								<div className="noti-footer">
+								<a href="#!">show all</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li className="nav-item p-0">
+						<div className={popup ?`${parentPopupClass}  show`:parentPopupClass}>
+							<button
+								style={{ lineHeight: 0 }}
+								aria-haspopup="true"
+								aria-expanded="false"
+								id="dropdown-basic"
+								type="button"
+								onClick={e=>setPopup(!popup)}
+								className="dropdown-toggle btn btn-link "
+							>
+								<IconButton>
+									<MoreVert size="large"/>
+								</IconButton>
+							</button>
+							<div className={popup ? `show ${childPopupClass}`:childPopupClass} style={{marginRight:25}}>
+								<div className="pro-head">
+									<img src={require("../../assets/plain.png")} style={{height:42,width:42}} className="img-radius" alt="User-Profile-Image"/>
+									<span className="geb  ls-1 fs-18">John Doe</span>
+									
+								</div>
+								<ul className="pro-body">
+									<li><span className="dropdown-item"><Shield  size="18" className="mr-2" style={{verticalAlign:"text-bottom"}}/> Security Prefrences</span></li>
+									<li onClick={logout}><span className="dropdown-item"><LogOut  size="18" className="mr-2" style={{verticalAlign:"text-bottom"}} /> Logout</span></li>
 								</ul>
 							</div>
 						</div>
-						
 					</li>
 				</ul>
 			</div>

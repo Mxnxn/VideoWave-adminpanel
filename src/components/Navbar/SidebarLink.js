@@ -18,7 +18,7 @@ const SidebarLink = ({ icon: Icon, toggleNavBar, path, name }) => {
 						className="pcoded-micon"
 						style={{ width: toggleNavBar ? "50px" : "30px" }}
 					>
-						<Icon size={toggleNavBar ? "42" : "24"} />
+						<Icon size={toggleNavBar ? "30" : "24"} />
 					</span>
 					<span className="pcoded-mtext fs-17" id="nav-link-mtext">
 						{name}

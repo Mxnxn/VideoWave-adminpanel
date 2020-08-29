@@ -353,8 +353,8 @@
 				content: "\63";
 				font-family: "pct";
 				position: absolute;
-				left: -5px;
-				top: $header-height - 10;
+				left: 25px;
+				top: $header-height - 5;
 				z-index: 1001;
 				font-size: 40px;
 				line-height: 0;
@@ -478,7 +478,8 @@
 				list-style: none;
 
 				li {
-					a {
+					a, span {
+						cursor: pointer;
 						color: $theme-font-color;
 						font-size: 14px;
 						padding: 10px 20px;

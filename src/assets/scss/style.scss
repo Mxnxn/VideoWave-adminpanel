@@ -1,4 +1,6 @@
 @import "../css/bootstrap.css";
+@import "../css/datta-icons.css";
+
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap");
 
 @font-face {
@@ -50,7 +52,6 @@
 @import "generic";
 @import "mixins/function";
 
-@import "../feather/icon-font.css";
 // important Element
 @import "./menu/menu-lite";
 

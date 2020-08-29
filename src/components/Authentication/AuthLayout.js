@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Constants from "../../Constants/Constants";
-const Register = React.lazy(() => import("./components/Register"));
-const Login = React.lazy(() => import("./components/Login"));
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 const AuthLayout = (props) => {
 	const [view, setView] = useState(Constants.LOGIN);

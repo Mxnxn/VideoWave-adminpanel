@@ -98,10 +98,10 @@ const InventoryManagement = ({setProgress}) => {
 						<div className="pcoded-inner-content">
 							<div className="main-body">
 								<div className="row fix-h-85">
-									<div className="col-lg-4 h-100">
+									<div className="col-lg-4 h-100 px-0 pr-2">
 										<ItemsClasses items={items} setModal={modalOpener} />
 									</div>
-									<div className="col-lg-8 h-100   d-flex flex-column ">
+									<div className="col-lg-8 h-100 px-0  d-flex flex-column ">
 										<ItemsCategories items={items} setModal={modalOpener} />
 										<ItemsTypes items={items} setModal={modalOpener} />
 									</div>
