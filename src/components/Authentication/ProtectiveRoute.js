@@ -10,10 +10,10 @@ export const ProtectiveRoute = ({ component: Component, ...rest }) => {
 			render={(props) => {
 				if (window.localStorage.getItem("session_token")) {
 					return (
-						<Component uid={window.localStorage.getItem("session_token")} />
+						<Component {...rest} uid={window.localStorage.getItem("session_token")} />
 					);
 				} else {
-					return <AuthLayout />;
+					return <AuthLayout {...rest}/>;
 				}
 			}}
 		/>

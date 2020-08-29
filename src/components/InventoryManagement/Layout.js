@@ -7,7 +7,7 @@ import ItemsClasses from "./components/ItemsClasses";
 import AddModal from "./components/AddModal";
 import AddItemModal from "./components/AddItemModal";
 
-const InventoryManagement = (props) => {
+const InventoryManagement = ({setProgress}) => {
 	const items = [
 		"SHARP 2500 LUMENS SR.NO5 WHITE",
 		"SEAMLESS SWITCHER",

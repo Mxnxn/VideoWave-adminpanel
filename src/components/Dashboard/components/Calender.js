@@ -14,7 +14,7 @@ import "react-big-calendar/lib/sass/styles.scss";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss";
 import { dashboardBackend } from "../dashboard_backend";
 
-let ReactCalendar = (props) => {
+let ReactCalendar = ({setProgress}) => {
 	const [eventObj, setEvents] = useState([{}]);
 	const [loading, setLoading] = useState(false);
 	const localizer = momentLocalizer(moment);
@@ -41,14 +41,14 @@ let ReactCalendar = (props) => {
 			const res = await dashboardBackend.getAllEvents(
 				window.localStorage.getItem("session_token")
 			);
+			setProgress(25)
 			if (res) {
 				setEvents(res);
 				setLoading(true);
 			}
+			setProgress(100);
 		} catch (err) {
-			window.localStorage.removeItem("session_token");
-			window.localStorage.removeItem("id");
-			window.location.reload();
+			setProgress(0);
 		}
 	}
 
@@ -60,6 +60,7 @@ let ReactCalendar = (props) => {
 			const res = await dashboardBackend.getAllItems(
 				window.localStorage.getItem("session_token")
 			);
+			setProgress(25)
 			if (res) {
 				setItemsArr(res.data);
 				const temp = [];
@@ -69,19 +70,23 @@ let ReactCalendar = (props) => {
 					});
 				}
 				setSubItemsArr(temp);
+				setProgress(100);
 			}
 		} catch (err) {
-			// window.localStorage.removeItem("session_token");
-			// window.localStorage.removeItem("id");
-			// window.location.reload();
+			setProgress(0)
 			console.log(err);
 		}
 	}
 
 	//! items and event fetch
 	useEffect(() => {
+		setProgress(15);
 		getAsyncAllEvents();
 		getAsyncAllItems();
+		setTimeout(() => {
+			setProgress(0)
+		}, 750);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const [startDate, setStart] = useState(null);
@@ -189,7 +194,7 @@ let ReactCalendar = (props) => {
 		};
 
 		return (
-			<div className="d-flex flex-row">
+			<div className="d-flex flex-row ">
 				<div className="col-xl-7 mt-2 mb-4">
 					<div className="d-flex">
 						<Button

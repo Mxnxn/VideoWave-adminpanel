@@ -411,4 +411,15 @@
 		font-size:17px;
 	}
   }
+
+  .pace-loader{
+    height: 10px;
+    position: absolute;
+    z-index: 1050;
+    top: 0;
+	background: $purple-color;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	transition: 1s ease-in;
+  }
   

@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import { inventoryBackend } from "./inventory_backend";
 import Classes from "./components/Classes";
 
-const Layout = (props) => {
+const Layout = ({setProgress}) => {
 	const [inventories, setInventories] = useState({
 		classes: [],
 		categories: [],
@@ -16,6 +16,7 @@ const Layout = (props) => {
 	const [loading, setLoading] = useState(false);
 	const [items, setItems] = useState({});
 	const fetchInventories = useCallback(async () => {
+		setProgress(25);
 		try {
 			const res = await inventoryBackend.getAllInventory(session_token);
 			const classes = [...new Set(res.map((el) => el.class))];
@@ -51,8 +52,9 @@ const Layout = (props) => {
 						[classes[i]]: temp,
 					};
 			}
-			console.log(sameClass);
+			setProgress(100);
 			setItems(sameClass);
+			setProgress(0)
 			setInventories({
 				...inventories,
 				objects: res,
@@ -61,7 +63,9 @@ const Layout = (props) => {
 				types: types,
 			});
 			setLoading(true);
+			
 		} catch (error) {
+				setProgress(0);
 			console.log(error);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
