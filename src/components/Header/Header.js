@@ -3,7 +3,6 @@ import { TrendingUp, MoreHorizontal, LogOut, Shield } from "react-feather";
 import { Badge, IconButton } from "@material-ui/core";
 import {
   NotificationsActiveRounded,
-  Settings,
   MoreVert,
 } from "@material-ui/icons";
 import Axios from "axios";
@@ -139,7 +138,7 @@ const Header = ({ heading }) => {
                       <img
                         className="img-radius"
                         src={require("../../assets/plain.png")}
-                        alt="Generic placeholder image"
+                        alt="a"
                       />
                       <div className="media-body">
                         <p>
@@ -186,7 +185,7 @@ const Header = ({ heading }) => {
                     src={require("../../assets/plain.png")}
                     style={{ height: 42, width: 42 }}
                     className="img-radius"
-                    alt="User-Profile-Image"
+                    alt="b"
                   />
                   <span className="geb  ls-1 fs-18">John Doe</span>
                 </div>

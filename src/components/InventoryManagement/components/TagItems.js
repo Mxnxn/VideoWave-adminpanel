@@ -24,7 +24,7 @@ const TagItems = ({ items, setModal, setExistingItems, title,toOpen }) => {
 
       const onTapEditHandler = async () => {
             try {
-                  const res = await inventoryManagementBackend.updateTag(selected.object.id);
+                  await inventoryManagementBackend.updateTag(selected.object.id);
             } catch (error) {
                   setError(error.message);
             }
@@ -33,7 +33,7 @@ const TagItems = ({ items, setModal, setExistingItems, title,toOpen }) => {
       const onTapDeleteHandler = async () => {
             try {
 
-                  const res = await inventoryManagementBackend.deleteTag(selected.object.id);
+                  await inventoryManagementBackend.deleteTag(selected.object.id);
                   const selectedIndex = items.findIndex((el) => el.id === selected.object.id);
                   if (selectedIndex !== -1) {
                         console.log(selectedIndex,items[selectedIndex])

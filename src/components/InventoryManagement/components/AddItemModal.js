@@ -112,7 +112,7 @@ const AddItemModal = ({
 					formData.set(`serial_number[${i}]`,dynamicForm[i].serial_number);
 					formData.set(`serial_quantity[${i}]`,dynamicForm[i].quantity);
 				}
-				const res = await inventoryManagementBackend.addItemsWithSerial(formData);
+				await inventoryManagementBackend.addItemsWithSerial(formData);
 				setDynamicForm([{...initDynamicForm}]);
 				onCancelHandler();
 			} catch (error) {

@@ -1,7 +1,6 @@
-import React,{useState} from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ProtectiveRoute } from "../Authentication/ProtectiveRoute";
-import PaceLoader from "../Utils/PaceLoader";
 import DashboardLayout from "../Dashboard/Layout";
 import InventoryLayout from "../Inventory/Layout";
 import InventoryManagement from "../InventoryManagement/Layout";

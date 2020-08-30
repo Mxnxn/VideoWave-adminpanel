@@ -8,14 +8,6 @@ import PaceLoader from "../Utils/PaceLoader";
 import { inventoryManagementBackend } from "./inventoryManagementBackend";
 
 const InventoryManagement = (props) => {
-  const items = [
-    "SHARP 2500 LUMENS SR.NO5 WHITE",
-    "SEAMLESS SWITCHER",
-    "PROCESSOR & CONTROLLER",
-    "CAT-6 TRANSMITTER",
-    "VENUSX1PRO",
-    "4K FIBER CABLE",
-  ];
 
   const initModalsState = {
     addCategory: false,
@@ -44,6 +36,7 @@ const InventoryManagement = (props) => {
   const [loading, setLoading] = useState(false);
 
   const getTags = useCallback(async () => {
+    setProgress(24);
     try {
       const res = await inventoryManagementBackend.getTags();
       console.log([...new Set(res.data.class)][0]);
@@ -52,7 +45,12 @@ const InventoryManagement = (props) => {
         categories: [...new Set(res.data.category)],
         types: [...new Set(res.data.type)],
       });
+      setProgress(49);
       setLoading(true);
+      setProgress(100);
+      setTimeout(() => {
+        setProgress(false)
+      }, 500);
     } catch (error) {
       console.log("ERROR GETTING TAGs :", error);
     }
