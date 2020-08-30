@@ -9,8 +9,8 @@ const Classes = ({
 	selected,
 	onTapCategoryToggle,
 }) => {
-	return Object.keys(items).map((cls) => (
-		<>
+	return Object.keys(items).map((cls,index) => (
+		<span key={index}>
 			<li
 				className={
 					items[cls].open
@@ -29,7 +29,7 @@ const Classes = ({
 				cls={cls}
 				setSelected={setSelected}
 			/>
-		</>
+		</span>
 	));
 };
 

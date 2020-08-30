@@ -17,6 +17,7 @@ import {
 import { CloseRounded, AddRounded } from "@material-ui/icons";
 import AlertDanger from "../../Utils/AlertDanger";
 import CustomeTextField from "../../Dashboard/components/CustomeTextFIeld";
+import { inventoryManagementBackend } from "../inventoryManagementBackend";
 
 const AddItemModal = ({
 	onCancelHandler,
@@ -27,9 +28,9 @@ const AddItemModal = ({
 	setState,
 	stuffs,
 }) => {
-	const classes = [...stuffs.classes];
-	const categories = [...stuffs.categories];
-	const types = [...stuffs.types];
+	const classes = [...new Set(stuffs.classes)];
+	const categories = [...new Set(stuffs.categories)];
+	const types = [...new Set(stuffs.types)];
 
 	const [dynamicForm, setDynamicForm] = useState([]);
 	const [itemDetails, setItemDetails] = useState({
@@ -54,7 +55,7 @@ const AddItemModal = ({
 
 	const [generalError, setGeneralError] = useState(false);
 
-	const submitHandler = () => {
+	const submitHandler = async () => {
 		setItemDetails({ ...itemDetails, error: false });
 		setGeneralError(false);
 		if (!itemDetails.name) {
@@ -98,7 +99,25 @@ const AddItemModal = ({
 		if (isDuplicateAvailable) {
 			return console.log("Duplicate Available");
 		} else {
-			return console.log(dynamicForm);
+			try {
+				const formData = new FormData();
+				formData.set("name",itemDetails.name);
+				formData.set("class",itemDetails.class);
+				formData.set("category",itemDetails.category);
+				formData.set("type",itemDetails.type);
+				let count = 0;
+				dynamicForm.forEach(el=>count = Number(el.quantity)+count);
+				formData.set("total_quantity",count);
+				for (let i = 0; i < dynamicForm.length; i++) {
+					formData.set(`serial_number[${i}]`,dynamicForm[i].serial_number);
+					formData.set(`serial_quantity[${i}]`,dynamicForm[i].quantity);
+				}
+				const res = await inventoryManagementBackend.addItemsWithSerial(formData);
+				setDynamicForm([{...initDynamicForm}]);
+				onCancelHandler();
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 
@@ -161,8 +180,8 @@ const AddItemModal = ({
 											<em>None</em>
 										</MenuItem>
 										{classes.map((el, index) => (
-											<MenuItem value={el} key={index}>
-												{el}
+											<MenuItem value={el.id} key={index}>
+												{el.tag_name}
 											</MenuItem>
 										))}
 									</Select>
@@ -184,9 +203,9 @@ const AddItemModal = ({
 											<em>None</em>
 										</MenuItem>
 										{categories.map((el, index) => (
-											<MenuItem value={el} key={index}>
-												{el}
-											</MenuItem>
+											<MenuItem value={el.id} key={index}>
+											{el.tag_name}
+										</MenuItem>
 										))}
 									</Select>
 								</FormControl>
@@ -202,13 +221,13 @@ const AddItemModal = ({
 										}
 										label="Type"
 									>
-										<MenuItem disabled selected value="">
-											<em>None</em>
+										<MenuItem disabled >
+											None
 										</MenuItem>
 										{types.map((el, index) => (
-											<MenuItem value={el} key={index}>
-												{el}
-											</MenuItem>
+											<MenuItem value={el.id} key={index}>
+											{el.tag_name}
+										</MenuItem>
 										))}
 									</Select>
 								</FormControl>

@@ -3,9 +3,10 @@ import React from "react";
 const Item = ({ items, selected, setSelected }) => {
 	return items.open ? (
 		<li>
-			{Object.keys(items).map((el) =>
+			{Object.keys(items).map((el,index) =>
 				el !== "open" ? (
 					<span
+					key={index}
 						className={
 							selected.name === items[el].name
 								? "item nav-link active-itm"

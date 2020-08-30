@@ -9,10 +9,10 @@ const Category = ({
 	setSelected,
 	cls,
 }) => {
-	return Object.keys(items).map((cat) => {
+	return Object.keys(items).map((cat,index) => {
 		return Object.keys(items[cat]).length > 0 ? (
 			items.open ? (
-				<ul>
+				<ul key={index}>
 					<li
 						className={
 							items[cat].open

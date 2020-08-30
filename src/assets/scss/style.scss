@@ -423,4 +423,27 @@
 	border-bottom-right-radius: 10px;
 	transition: 1s ease-in;
   }
+
+  .del-fab{
+	  position: absolute;
+	  bottom: 10px;
+	  right: 20px;
+  }
+
+  .popover-list-head{
+	height: 40px;
+	width: 200px;
+	display: flex;
+	align-items: center;
+  }
+  .popover-list-items{
+	  height: 40px;
+	  width: 200px;
+	  display: flex;
+	  align-items: center;
+
+	  &:hover{
+		  background: rgba($color: $secondary-color, $alpha: 0.2);
+	  }
+  }
   

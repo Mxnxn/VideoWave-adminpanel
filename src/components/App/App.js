@@ -8,14 +8,12 @@ import InventoryManagement from "../InventoryManagement/Layout";
 
 const App = (props) => {
 
-	const [progress, setProgress] = useState(0);
 
 	return (
 		<BrowserRouter >
-				<PaceLoader progress={progress}/>
-				<ProtectiveRoute path="/" setProgress={setProgress} component={DashboardLayout} />
-				<ProtectiveRoute path="/inventory" setProgress={setProgress} component={InventoryLayout} />
-				<ProtectiveRoute path="/manage/inventory" setProgress={setProgress} component={InventoryManagement} />
+				<ProtectiveRoute path="/"  component={DashboardLayout} />
+				<ProtectiveRoute path="/inventory"  component={InventoryLayout} />
+				<ProtectiveRoute path="/manage/inventory"  component={InventoryManagement} />
 		</BrowserRouter>
 	);
 };
