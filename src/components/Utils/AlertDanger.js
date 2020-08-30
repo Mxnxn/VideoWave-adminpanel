@@ -3,7 +3,7 @@ import { AlertCircle } from "react-feather";
 
 const AlertDanger = ({ error }) => {
 	return error ? (
-		<div className="row">
+		<div className="row mt-3">
 			<div className="col-sm-12">
 				<div className="alert alert-danger rounded">
 					<span className="text-danger ">

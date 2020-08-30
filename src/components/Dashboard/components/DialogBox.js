@@ -18,10 +18,7 @@ import {
 	InputAdornment,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import {
-	CloseRounded,
-	AddRounded,
-} from "@material-ui/icons";
+import { CloseRounded, AddRounded } from "@material-ui/icons";
 
 import moment from "moment";
 import { dashboardBackend } from "../dashboard_backend";
@@ -55,35 +52,35 @@ const DailogBox = ({
 	const [form, setForm] = useState(
 		edit
 			? {
-				id: edit.id,
-				name: edit.name,
-				location: edit.location,
-				client_name: edit.client_name,
-				client_phone: edit.client_phone,
-				client_company: edit.client_company,
-				technician_name: edit.technician_name,
-				technician_details: edit.technician_details,
-				vehicle_number: edit.vehicle_number,
-				driver_name: edit.driver_name,
-				driver_phone: edit.driver_phone,
-				invoice_number: edit.invoice_number,
-				priority: edit.priority,
-			}
+					id: edit.id,
+					name: edit.name,
+					location: edit.location,
+					client_name: edit.client_name,
+					client_phone: edit.client_phone,
+					client_company: edit.client_company,
+					technician_name: edit.technician_name,
+					technician_details: edit.technician_details,
+					vehicle_number: edit.vehicle_number,
+					driver_name: edit.driver_name,
+					driver_phone: edit.driver_phone,
+					invoice_number: edit.invoice_number,
+					priority: edit.priority,
+			  }
 			: {
-				id: "",
-				name: "",
-				location: "",
-				client_name: "",
-				client_phone: "",
-				client_company: "",
-				technician_name: "",
-				technician_details: "",
-				vehicle_number: "",
-				driver_name: "",
-				driver_phone: "",
-				invoice_number: "",
-				priority: "04a9f5",
-			}
+					id: "",
+					name: "",
+					location: "",
+					client_name: "",
+					client_phone: "",
+					client_company: "",
+					technician_name: "",
+					technician_details: "",
+					vehicle_number: "",
+					driver_name: "",
+					driver_phone: "",
+					invoice_number: "",
+					priority: "04a9f5",
+			  }
 	);
 
 	useEffect(() => {
@@ -93,8 +90,12 @@ const DailogBox = ({
 				const assignedItems = edit.items;
 				assignedItems.forEach((assignedItem, index) => {
 					items.forEach((item) => {
-						if(assignedItem.item_id === item.id){
-							const filterArr = item.serials.filter((serial) => assignedItem.id !== serial.id && assignedItem.item_id === serial.item_id);
+						if (assignedItem.item_id === item.id) {
+							const filterArr = item.serials.filter(
+								(serial) =>
+									assignedItem.id !== serial.id &&
+									assignedItem.item_id === serial.item_id
+							);
 							item.serials = filterArr;
 							temp.push({
 								id: index,
@@ -103,12 +104,12 @@ const DailogBox = ({
 								serial_number: assignedItem,
 							});
 						}
-					})
-				})
+					});
+				});
 				setInventory([...items]);
 				setDynamicForm([...temp]);
 			}
-		} catch (error) { }
+		} catch (error) {}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -179,6 +180,10 @@ const DailogBox = ({
 		for (let key of difference) {
 			formData.set(key, form[key]);
 		}
+		dynamicForm.forEach((el, index) => {
+			formData.set(`serial_number[${index}]`, el.serial_number.serial_number);
+			formData.set(`serial_quantity[${index}]`, el.qty);
+		});
 		dashboardBackend
 			.editEvent(
 				form.id,
@@ -243,7 +248,7 @@ const DailogBox = ({
 		try {
 			console.log(destination.droppableId, source.droppableId, draggableId);
 			console.log(items[draggableId]);
-		} catch (error) { }
+		} catch (error) {}
 	};
 
 	const onEndDate = (e) => {
@@ -271,7 +276,6 @@ const DailogBox = ({
 		setDynamicForm([...temp]);
 	};
 
-
 	useEffect(() => {
 		console.log("Original Arr : ", dynamicForm);
 	}, [dynamicForm]);
@@ -293,7 +297,9 @@ const DailogBox = ({
 					</Toolbar>
 				</AppBar>
 				<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
-					<AlertDanger error={error} />
+					<div className="col-sm-12">
+						<AlertDanger error={error} />
+					</div>
 					<div className="d-flex flex-wrap">
 						<div
 							className="col-sm-4"
@@ -347,43 +353,12 @@ const DailogBox = ({
 														<>
 															{!searchResult.flag
 																? items.map((elx) => {
-																	return subItems.map((el, index) =>
-																		el.item_id === elx.id ? (
-																			<Draggable
-																				draggableId={"" + el.id}
-																				index={index}
-																				key={index}
-																			>
-																				{(provded, snpshot) => {
-																					return (
-																						<div
-																							{...provded.dragHandleProps}
-																							{...provded.draggableProps}
-																							elevation="1"
-																							className="mb-2 alert cursor-pointer rounded alert-info "
-																							ref={provded.innerRef}
-																						>
-																							<span className="mr-auto">
-																								{elx.name}
-																							</span>
-																							<span className="serial-number">
-																								serial : {el.serial_number}
-																							</span>
-																						</div>
-																					);
-																				}}
-																			</Draggable>
-																		) : null
-																	);
-																})
-																: searchResult.items.map((elx) => {
-																	return searchResult.serials.map(
-																		(el, index) => {
-																			return el.item_id === elx.id ? (
+																		return subItems.map((el, index) =>
+																			el.item_id === elx.id ? (
 																				<Draggable
 																					draggableId={"" + el.id}
-																					key={index}
 																					index={index}
+																					key={index}
 																				>
 																					{(provded, snpshot) => {
 																						return (
@@ -404,10 +379,41 @@ const DailogBox = ({
 																						);
 																					}}
 																				</Draggable>
-																			) : null;
-																		}
-																	);
-																})}
+																			) : null
+																		);
+																  })
+																: searchResult.items.map((elx) => {
+																		return searchResult.serials.map(
+																			(el, index) => {
+																				return el.item_id === elx.id ? (
+																					<Draggable
+																						draggableId={"" + el.id}
+																						key={index}
+																						index={index}
+																					>
+																						{(provded, snpshot) => {
+																							return (
+																								<div
+																									{...provded.dragHandleProps}
+																									{...provded.draggableProps}
+																									elevation="1"
+																									className="mb-2 alert cursor-pointer rounded alert-info "
+																									ref={provded.innerRef}
+																								>
+																									<span className="mr-auto">
+																										{elx.name}
+																									</span>
+																									<span className="serial-number">
+																										serial : {el.serial_number}
+																									</span>
+																								</div>
+																							);
+																						}}
+																					</Draggable>
+																				) : null;
+																			}
+																		);
+																  })}
 															{provided.placeholder}
 														</>
 													</div>
@@ -703,35 +709,61 @@ const DailogBox = ({
 																			}}
 																			onChange={(evt, value, action) => {
 																				if (action === "clear") {
-																					let current = dynamicForm[index].serial_number;
-																					const currentSelected = dynamicForm[index].selected;
-																					const inventoryItemIndex = inventory.filter((item) => item.id === currentSelected.id);
-																					currentSelected.serials = [...currentSelected.serials, current];
+																					let current =
+																						dynamicForm[index].serial_number;
+																					const currentSelected =
+																						dynamicForm[index].selected;
+																					const inventoryItemIndex = inventory.filter(
+																						(item) =>
+																							item.id === currentSelected.id
+																					);
+																					currentSelected.serials = [
+																						...currentSelected.serials,
+																						current,
+																					];
 																					dynamicForm[index].serial_number = "";
-																					inventory.splice(inventoryItemIndex, 0);
 																					inventory.splice(
-																						inventoryItemIndex, 0, currentSelected
+																						inventoryItemIndex,
+																						0
+																					);
+																					inventory.splice(
+																						inventoryItemIndex,
+																						0,
+																						currentSelected
 																					);
 																					setInventory([...inventoryItemIndex]);
 																					setDynamicForm([...dynamicForm]);
-																				}else if(action === "select-option" && dynamicForm[index].serial_number){
-																					const currentSerialItem = dynamicForm[index].serial_number;
-																					const currentSelected = dynamicForm[index].selected;
-																					currentSelected.serials = [...currentSelected.serials,currentSerialItem];
-																					dynamicForm[index].serial_number = ""
+																				} else if (
+																					action === "select-option" &&
+																					dynamicForm[index].serial_number
+																				) {
+																					const currentSerialItem =
+																						dynamicForm[index].serial_number;
+																					const currentSelected =
+																						dynamicForm[index].selected;
+																					currentSelected.serials = [
+																						...currentSelected.serials,
+																						currentSerialItem,
+																					];
+																					dynamicForm[index].serial_number = "";
 																				}
 																				try {
 																					const currentSelected =
 																						dynamicForm[index].selected;
-																					const selectItemIndex = currentSelected.serials.findIndex((serial) => serial.id === value.id);
-																					currentSelected.serials.splice(selectItemIndex, 1);
+																					const selectItemIndex = currentSelected.serials.findIndex(
+																						(serial) => serial.id === value.id
+																					);
+																					currentSelected.serials.splice(
+																						selectItemIndex,
+																						1
+																					);
 																					dynamicForm[
 																						index
 																					].serial_number = value;
 																					setDynamicForm([...dynamicForm]);
 																					return value.serial_number;
 																				} catch (error) {
-																					return ""
+																					return "";
 																				}
 																			}}
 																			value={el.serial_number}
@@ -796,7 +828,7 @@ const DailogBox = ({
 																	selected: "",
 																	serial_number: "",
 																	qty: 1,
-																	assign: false
+																	assign: false,
 																},
 															])
 														}
@@ -848,20 +880,20 @@ const DailogBox = ({
 						</Button>
 					</DialogActions>
 				) : (
-						<DialogActions className="justify-content-between pl-4 pl-16 mb-2">
-							<Button
-								onClick={editEventDetail}
-								variant="contained"
-								color="primary"
-							>
-								{" "}
+					<DialogActions className="justify-content-between pl-4 pl-16 mb-2">
+						<Button
+							onClick={editEventDetail}
+							variant="contained"
+							color="primary"
+						>
+							{" "}
 							Save
-							</Button>
-							<IconButton>
-								<Icon>delete</Icon>
-							</IconButton>
-						</DialogActions>
-					)}
+						</Button>
+						<IconButton>
+							<Icon>delete</Icon>
+						</IconButton>
+					</DialogActions>
+				)}
 			</Dialog>
 		</DragDropContext>
 	);
