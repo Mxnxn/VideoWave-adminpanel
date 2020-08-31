@@ -4,9 +4,11 @@ import { inventoryBackend } from "./inventory_backend";
 import Classes from "./components/Classes";
 import PaceLoader from "../Utils/PaceLoader";
 import { IconButton } from "@material-ui/core";
-import { DeleteRounded } from "@material-ui/icons";
+import { DeleteRounded, EditRounded } from "@material-ui/icons";
 import { inventoryManagementBackend } from "../InventoryManagement/inventoryManagementBackend";
 import DeleteModal from "../Utils/DeleteModal";
+import InventorySidebarHeading from "./components/InventorySidebarHeading";
+
 const Layout = (props) => {
 	const [inventories, setInventories] = useState({
 		classes: [],
@@ -155,6 +157,18 @@ const Layout = (props) => {
 		setDeleteModal(false);
 	};
 
+	const [search, setSearch] = useState({
+		view: false,
+		query: "",
+	});
+	const onSearch = (e) => {
+		setSearch({ ...search, query: e.target.value });
+	};
+
+	const cancelSearch = () => {
+		setSearch({ ...search, query: "" });
+	};
+
 	return (
 		<>
 			<PaceLoader progress={progress.count} view={progress.view} />
@@ -166,9 +180,12 @@ const Layout = (props) => {
 							<div className="d-flex">
 								<div className="bg-sidebar">
 									<ul>
-										<li className="font-weight-bold sidebar-top geb">
-											Inventory
-										</li>
+										<InventorySidebarHeading
+											setSearch={setSearch}
+											search={search}
+											onSearch={onSearch}
+											cancelSearch={cancelSearch}
+										/>
 										<Classes
 											items={items}
 											onTapCategoryToggle={onTapCategoryToggle}
@@ -183,7 +200,12 @@ const Layout = (props) => {
 									{selected ? (
 										<div className="d-flex flex-column  h-100 margin-20px ">
 											<div className="d-flex geb fs-24 mt-3 mb-3">
-												<span>{selected.name}</span>
+												<span className="d-flex align-items-center">
+													{selected.name}{" "}
+													<IconButton className="ml-2">
+														<EditRounded />
+													</IconButton>
+												</span>
 												<span className="ml-auto" style={{ marginRight: "5%" }}>
 													Available Quantity: {availableQty}
 												</span>

@@ -101,19 +101,19 @@ const AddItemModal = ({
 		} else {
 			try {
 				const formData = new FormData();
-				formData.set("name",itemDetails.name);
-				formData.set("class",itemDetails.class);
-				formData.set("category",itemDetails.category);
-				formData.set("type",itemDetails.type);
+				formData.set("name", itemDetails.name);
+				formData.set("class", itemDetails.class);
+				formData.set("category", itemDetails.category);
+				formData.set("type", itemDetails.type);
 				let count = 0;
-				dynamicForm.forEach(el=>count = Number(el.quantity)+count);
-				formData.set("total_quantity",count);
+				dynamicForm.forEach((el) => (count = Number(el.quantity) + count));
+				formData.set("total_quantity", count);
 				for (let i = 0; i < dynamicForm.length; i++) {
-					formData.set(`serial_number[${i}]`,dynamicForm[i].serial_number);
-					formData.set(`serial_quantity[${i}]`,dynamicForm[i].quantity);
+					formData.set(`serial_number[${i}]`, dynamicForm[i].serial_number);
+					formData.set(`serial_quantity[${i}]`, dynamicForm[i].quantity);
 				}
 				await inventoryManagementBackend.addItemsWithSerial(formData);
-				setDynamicForm([{...initDynamicForm}]);
+				setDynamicForm([{ ...initDynamicForm }]);
 				onCancelHandler();
 			} catch (error) {
 				console.log(error);
@@ -204,8 +204,8 @@ const AddItemModal = ({
 										</MenuItem>
 										{categories.map((el, index) => (
 											<MenuItem value={el.id} key={index}>
-											{el.tag_name}
-										</MenuItem>
+												{el.tag_name}
+											</MenuItem>
 										))}
 									</Select>
 								</FormControl>
@@ -221,13 +221,11 @@ const AddItemModal = ({
 										}
 										label="Type"
 									>
-										<MenuItem disabled >
-											None
-										</MenuItem>
+										<MenuItem disabled>None</MenuItem>
 										{types.map((el, index) => (
 											<MenuItem value={el.id} key={index}>
-											{el.tag_name}
-										</MenuItem>
+												{el.tag_name}
+											</MenuItem>
 										))}
 									</Select>
 								</FormControl>

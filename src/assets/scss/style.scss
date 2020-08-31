@@ -43,7 +43,7 @@
 	/* iOS 4.1- */
 }
 
-.font-weight-bold{
+.font-weight-bold {
 	font-weight: 600 !important;
 }
 // General theme contents
@@ -292,19 +292,19 @@
 	font-size: 24px;
 }
 
-.fs-20{
-	font-size:20px;
+.fs-20 {
+	font-size: 20px;
 }
 
-.fs-16{
-	font-size:16px;
+.fs-16 {
+	font-size: 16px;
 }
 
-.ls-1{
+.ls-1 {
 	letter-spacing: 1px;
 }
 
-.ls-2{
+.ls-2 {
 	letter-spacing: 2px;
 }
 
@@ -346,104 +346,106 @@
 	}
 }
 
-.fs-18{
+.fs-18 {
 	font-size: 18px;
 }
 
-.b-bgx{
+.b-bgx {
 	background: rgba($color: $secondary-color, $alpha: 0.5);
-	color:white !important;
+	color: white !important;
 	border-radius: 10px;
-	min-width: 120px;;
+	min-width: 120px;
 }
 
-.h-60{
-	height:40px
+.h-60 {
+	height: 40px;
 }
 
-.fix-h-85{
+.fix-h-85 {
 	height: 83vh;
 }
 
-.item-area:hover{
-	::-webkit-scrollbar{
+.item-area:hover {
+	::-webkit-scrollbar {
 		display: block;
 	}
 }
 
 ::-webkit-scrollbar {
 	width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-	background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
 	background: rgba($color: #555, $alpha: 0.3);
-	border-radius:8px;
+	border-radius: 8px;
 	transition: 0.1s ease;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: #555; 
-  }
+}
 
-  .nav-barx{
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
 
-	&:not(:hover){
-		#nav-link-mtext{
+.nav-barx {
+	&:not(:hover) {
+		#nav-link-mtext {
 			-webkit-transform: rotateY(-90deg);
 			transform: rotateY(-90deg);
 			-webkit-transform-origin: 0 0;
 			transform-origin: 0 0;
 			opacity: 0;
-			-webkit-transition: all .3s ease-in-out;
-			transition: all .3s ease-in-out;
-			font-size:17px;
-			}
-
-		
+			-webkit-transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
+			font-size: 17px;
+		}
 	}
-	.fs-17{
-		font-size:17px;
+	.fs-17 {
+		font-size: 17px;
 	}
-  }
+}
 
-  .pace-loader{
-    height: 10px;
-    position: absolute;
-    z-index: 1050;
-    top: 0;
+.pace-loader {
+	height: 10px;
+	position: absolute;
+	z-index: 1050;
+	top: 0;
 	background: $purple-color;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 	transition: 1s ease-in;
-  }
+}
 
-  .del-fab{
-	  position: absolute;
-	  bottom: 10px;
-	  right: 20px;
-  }
+.del-fab {
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+}
 
-  .popover-list-head{
+.popover-list-head {
 	height: 40px;
 	width: 200px;
 	display: flex;
 	align-items: center;
-  }
-  .popover-list-items{
-	  height: 40px;
-	  width: 200px;
-	  display: flex;
-	  align-items: center;
+}
+.popover-list-items {
+	height: 40px;
+	width: 200px;
+	display: flex;
+	align-items: center;
 
-	  &:hover{
-		  background: rgba($color: $secondary-color, $alpha: 0.2);
-	  }
-  }
-  
+	&:hover {
+		background: rgba($color: $secondary-color, $alpha: 0.2);
+	}
+}
+
+.search-inv {
+	.MuiOutlinedInput-adornedEnd {
+		color: #fff;
+	}
+}
