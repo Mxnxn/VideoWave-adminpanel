@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	DialogActions,
 	Button,
@@ -8,23 +8,15 @@ import {
 	IconButton,
 	Dialog,
 	DialogContent,
-	MenuItem,
-	Select,
-	InputLabel,
-	FormControl,
 	TextField,
 } from "@material-ui/core";
 import { CloseRounded, AddRounded } from "@material-ui/icons";
 import AlertDanger from "../../Utils/AlertDanger";
 import CustomeTextField from "../../Dashboard/components/CustomeTextFIeld";
 import { inventoryManagementBackend } from "../inventoryManagementBackend";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-const AddItemModal = ({
-	onCancelHandler,
-	modal,
-	title,
-	stuffs,
-}) => {
+const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 	const classes = [...new Set(stuffs.classes)];
 	const categories = [...new Set(stuffs.categories)];
 	const types = [...new Set(stuffs.types)];
@@ -35,6 +27,7 @@ const AddItemModal = ({
 		type: "",
 		category: "",
 		name: "",
+		id: "",
 		error: false,
 	});
 	const initDynamicForm = {
@@ -43,6 +36,30 @@ const AddItemModal = ({
 		quantity: 1,
 		error: false,
 	};
+
+	useEffect(() => {
+		if (state) {
+			const cls = classes.filter(
+				(el) => el.tag_name.toUpperCase() === state.class
+			)[0];
+			const cat = categories.filter(
+				(el) => el.tag_name.toUpperCase() === state.category
+			)[0];
+			const typex = types.filter(
+				(el) => el.tag_name.toUpperCase() === state.type
+			)[0];
+			console.log(typex, cat, cls);
+			setItemDetails({
+				...itemDetails,
+				id: state.id,
+				class: cls,
+				category: cat,
+				type: typex,
+				name: state.name,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state]);
 
 	const onDaynamicValueChange = (evt, key, index) => {
 		const currentObj = dynamicForm[index];
@@ -58,6 +75,21 @@ const AddItemModal = ({
 		if (!itemDetails.name) {
 			return setItemDetails({ ...itemDetails, error: true });
 		}
+		if (state) {
+			if (dynamicForm.length === 0) {
+				const formData = new FormData();
+				formData.set("name", itemDetails.name);
+				formData.set("class", itemDetails.class.id);
+				formData.set("category", itemDetails.category.id);
+				formData.set("type", itemDetails.type.id);
+				await inventoryManagementBackend.updateItemsWithSerial(
+					formData,
+					itemDetails.id
+				);
+				return window.location.reload();
+			}
+		}
+		console.log("HERER?", itemDetails);
 		if (dynamicForm.length === 0) {
 			return setGeneralError(
 				"To add Items there should be atleast 1 serial number added!"
@@ -94,14 +126,16 @@ const AddItemModal = ({
 			setDynamicForm([...dynamicForm]);
 		});
 		if (isDuplicateAvailable) {
+			console.log("HERER?", itemDetails);
 			return console.log("Duplicate Available");
 		} else {
+			console.log("HERER?", itemDetails);
 			try {
 				const formData = new FormData();
 				formData.set("name", itemDetails.name);
-				formData.set("class", itemDetails.class);
-				formData.set("category", itemDetails.category);
-				formData.set("type", itemDetails.type);
+				formData.set("class", itemDetails.class.id);
+				formData.set("category", itemDetails.category.id);
+				formData.set("type", itemDetails.type.id);
 				let count = 0;
 				dynamicForm.forEach((el) => (count = Number(el.quantity) + count));
 				formData.set("total_quantity", count);
@@ -109,15 +143,26 @@ const AddItemModal = ({
 					formData.set(`serial_number[${i}]`, dynamicForm[i].serial_number);
 					formData.set(`serial_quantity[${i}]`, dynamicForm[i].quantity);
 				}
-				await inventoryManagementBackend.addItemsWithSerial(formData);
-				setDynamicForm([{ ...initDynamicForm }]);
-				onCancelHandler();
+				console.log("HERER?", itemDetails);
+				if (state) {
+					await inventoryManagementBackend.updateItemsWithSerial(
+						formData,
+						itemDetails.id
+					);
+					window.location.reload();
+				} else {
+					console.log("HERER?");
+					await inventoryManagementBackend.addItemsWithSerial(formData);
+					onCancelHandler();
+					setDynamicForm([{ ...initDynamicForm }]);
+				}
 			} catch (error) {
 				console.log(error);
+				setGeneralError("error");
+				// setGeneralError(error.response.data.message);
 			}
 		}
 	};
-
 
 	return (
 		<Dialog fullWidth maxWidth="md" open={modal} component="form">
@@ -152,77 +197,68 @@ const AddItemModal = ({
 							<AlertDanger error={el.error} />
 						))}
 
-						<div class="row mb-3 mr-3">
+						<div className="row mb-3 mr-3">
 							<div className="col-sm-12 col-xl-12">
 								<span className="geb fs-20">Add Item Details</span>
 							</div>
 						</div>
 						<div className="row mt-3 ">
 							<div className="col-sm-12 col-xl-6">
-								<FormControl fullWidth variant="outlined">
-									<InputLabel>Class</InputLabel>
-									<Select
-										label="Class"
-										onChange={(evt) =>
-											setItemDetails({
-												...itemDetails,
-												class: evt.target.value,
-											})
-										}
-									>
-										<MenuItem disabled selected value="">
-											<em>None</em>
-										</MenuItem>
-										{classes.map((el, index) => (
-											<MenuItem value={el.id} key={index}>
-												{el.tag_name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+								<Autocomplete
+									id="combo-box-demo"
+									options={classes}
+									onChange={(e, value) => {
+										setItemDetails({ ...itemDetails, class: value });
+										return value;
+									}}
+									value={itemDetails.class}
+									getOptionLabel={(option) => {
+										return option ? option.tag_name : "";
+									}}
+									renderInput={(params) => (
+										<TextField label="Class" variant="outlined" {...params} />
+									)}
+								/>
 							</div>
 							<div className="col-sm-12 col-xl-6">
-								<FormControl fullWidth variant="outlined">
-									<InputLabel>Category</InputLabel>
-									<Select
-										onChange={(evt) =>
-											setItemDetails({
-												...itemDetails,
-												category: evt.target.value,
-											})
-										}
-										label="Category"
-									>
-										<MenuItem disabled selected value="">
-											<em>None</em>
-										</MenuItem>
-										{categories.map((el, index) => (
-											<MenuItem value={el.id} key={index}>
-												{el.tag_name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+								<Autocomplete
+									id="combo-box-demo"
+									options={categories}
+									onChange={(e, value) => {
+										setItemDetails({ ...itemDetails, category: value });
+										return value;
+									}}
+									value={itemDetails.category}
+									getOptionLabel={(option) => {
+										return option ? option.tag_name : "";
+									}}
+									renderInput={(params) => (
+										<TextField
+											label="Category"
+											variant="outlined"
+											{...params}
+										/>
+									)}
+								/>
 							</div>
 						</div>
 						<div className="row mt-3 ">
 							<div className="col-sm-12 col-xl-6">
-								<FormControl fullWidth variant="outlined">
-									<InputLabel>Type</InputLabel>
-									<Select
-										onChange={(evt) =>
-											setItemDetails({ ...itemDetails, type: evt.target.value })
-										}
-										label="Type"
-									>
-										<MenuItem disabled>None</MenuItem>
-										{types.map((el, index) => (
-											<MenuItem value={el.id} key={index}>
-												{el.tag_name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+								<Autocomplete
+									id="combo-box-demo"
+									options={types}
+									onChange={(e, value) => {
+										setItemDetails({ ...itemDetails, type: value });
+										return value;
+									}}
+									value={itemDetails.type}
+									getOptionLabel={(option) => {
+										return option ? option.tag_name : "";
+									}}
+									renderInput={(params) => (
+										<TextField label="Type" variant="outlined" {...params} />
+									)}
+								/>
 							</div>
 							<div className="col-sm-12 col-xl-6">
 								<TextField
@@ -237,13 +273,13 @@ const AddItemModal = ({
 								/>
 							</div>
 						</div>
-						<div class="row my-3 mr-3">
+						<div className="row my-3 mr-3">
 							<div className="col-sm-12 col-xl-12">
-								<span className="geb fs-20">Add Serial and Quantity</span>
+								<span className="geb fs-20">Add new Serial and Quantity</span>
 							</div>
 						</div>
 						{dynamicForm.map((serialItem, index) => (
-							<div key={index} class="row mt-3 ">
+							<div key={index} className="row mt-3 ">
 								<div className="col-sm-12 col-xl-6">
 									<CustomeTextField
 										error={serialItem.error}
@@ -292,7 +328,7 @@ const AddItemModal = ({
 					varient="cotained"
 					style={{ background: "#04a9f5", outline: "none", borderRadius: 10 }}
 				>
-					Add
+					{state ? "Save" : "Add"}
 				</Button>
 			</DialogActions>
 		</Dialog>
