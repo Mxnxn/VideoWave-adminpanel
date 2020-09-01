@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Home, Package, Sliders } from "react-feather";
 import { Link } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import { CastConnectedRounded } from "@material-ui/icons";
 
 const Navbar = (props) => {
-	console.log(window.localStorage.getItem("switchView") === "true");
 
 	const [toggleNavBar, setToggleNavBar] = useState(
 		window.localStorage.getItem("switchView") === "true" ? true : false
 	);
-
-	useEffect(() => {
-		console.log(toggleNavBar);
-	}, [toggleNavBar]);
 
 	const classesNavbar =
 		"pcoded-navbar  menu-light navbar-default brand-default drp-icon-style1 menu-item-icon-style1 active-default  title-default";

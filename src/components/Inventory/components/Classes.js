@@ -17,7 +17,7 @@ const Classes = ({
 						? `head font-weight-bold cursor-pointer active-head`
 						: `head font-weight-bold cursor-pointer `
 				}
-				onClick={(e) => onTapClassToggle(cls)}
+				onClick={(e) => onTapClassToggle(cls,items)}
 			>
 				{cls}
 			</li>
@@ -27,6 +27,7 @@ const Classes = ({
 				onTapTypeToggle={onTapTypeToggle}
 				selected={selected}
 				cls={cls}
+				searchList={items}
 				setSelected={setSelected}
 			/>
 		</span>

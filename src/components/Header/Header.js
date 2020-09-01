@@ -29,7 +29,12 @@ const Header = ({ heading }) => {
 				window.localStorage.removeItem("email");
 				window.location.reload();
 			}
-		} catch (error) {}
+		} catch (error) {
+			window.localStorage.removeItem("session_token");
+				window.localStorage.removeItem("uid");
+				window.localStorage.removeItem("email");
+				window.location.reload();
+		}
 	};
 
 	return (
@@ -42,7 +47,7 @@ const Header = ({ heading }) => {
 					<div className="b-bg">
 						<TrendingUp />
 					</div>
-					<span className="b-title">Datta Able</span>
+					<span className="b-title">VideoWaves</span>
 				</a>
 			</div>
 			<a className="mobile-menu" id="mobile-header" href="#!">

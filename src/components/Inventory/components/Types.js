@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
 
-const Types = ({ items, setSelected, selected, switchCategory, onTapTypeToggle }) => {
+const Types = ({ items, setSelected, selected, switchCategory, onTapTypeToggle,searchList }) => {
       return Object.keys(items).map((type, index) => {
             return Object.keys(items[type]).length > 0 ? (
                   switchCategory.open ? (
@@ -12,7 +12,7 @@ const Types = ({ items, setSelected, selected, switchCategory, onTapTypeToggle }
                                                 ? `head font-weight-bold cursor-pointer active-head`
                                                 : `head font-weight-bold cursor-pointer`
                                     }
-                                    onClick={(e) => onTapTypeToggle(type)}
+                                    onClick={(e) => onTapTypeToggle(type,searchList)}
                               >
                                     {type}
                               </li>

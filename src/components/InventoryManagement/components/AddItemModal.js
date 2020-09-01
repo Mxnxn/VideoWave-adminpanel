@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
 	DialogActions,
 	Button,
@@ -22,10 +22,7 @@ import { inventoryManagementBackend } from "../inventoryManagementBackend";
 const AddItemModal = ({
 	onCancelHandler,
 	modal,
-	error,
 	title,
-	state,
-	setState,
 	stuffs,
 }) => {
 	const classes = [...new Set(stuffs.classes)];
@@ -121,9 +118,6 @@ const AddItemModal = ({
 		}
 	};
 
-	useEffect(() => {
-		console.log(itemDetails);
-	}, [itemDetails]);
 
 	return (
 		<Dialog fullWidth maxWidth="md" open={modal} component="form">
