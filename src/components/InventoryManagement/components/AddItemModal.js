@@ -48,7 +48,6 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 			const typex = types.filter(
 				(el) => el.tag_name.toUpperCase() === state.type
 			)[0];
-			console.log(typex, cat, cls);
 			setItemDetails({
 				...itemDetails,
 				id: state.id,
@@ -158,8 +157,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 				}
 			} catch (error) {
 				console.log(error);
-				setGeneralError("error");
-				// setGeneralError(error.response.data.message);
+				setGeneralError(error.response.data.message);
 			}
 		}
 	};
