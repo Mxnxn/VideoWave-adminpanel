@@ -7,6 +7,7 @@ const Category = ({
 	onTapTypeToggle,
 	selected,
 	searchList,
+	cls,
 	setSelected,
 }) => {
 	return Object.keys(items).map((cat,index) => {
@@ -19,13 +20,14 @@ const Category = ({
 								? `head font-weight-bold cursor-pointer active-head`
 								: `head font-weight-bold cursor-pointer`
 						}
-						onClick={(e) => onTapCategoryToggle(cat,searchList)}
+						onClick={(e) => onTapCategoryToggle(cat,searchList,cls)}
 					>
 						{cat}
 					</li>
 
 					<Types
 						items={items[cat]}
+						propCat={cat}
 						setSelected={setSelected}
 						selected={selected}
 						searchList={searchList}

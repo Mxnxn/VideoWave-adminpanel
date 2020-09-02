@@ -115,10 +115,10 @@ const Layout = (props) => {
 		setItems({ ...searchList });
 	};
 
-	const onTapCategoryToggle = (catName, searchList) => {
+	const onTapCategoryToggle = (catName, searchList,argCls) => {
 		Object.keys(searchList).forEach((cls) => {
 			Object.keys(searchList[cls]).forEach((cat) => {
-				if (cat === catName) {
+				if (cat === catName && argCls === cls) {
 					searchList[cls][cat].open = !searchList[cls][cat].open;
 				}
 			});
@@ -129,11 +129,11 @@ const Layout = (props) => {
 		});
 	};
 
-	const onTapTypeToggle = (typeName, searchList) => {
+	const onTapTypeToggle = (typeName, searchList,argCat) => {
 		Object.keys(searchList).forEach((cls) => {
 			Object.keys(searchList[cls]).forEach((cat) => {
 				Object.keys(searchList[cls][cat]).forEach((type) => {
-					if (type === typeName) {
+					if (type === typeName && argCat === cat) {
 						searchList[cls][cat][type].open = !searchList[cls][cat][type].open;
 					}
 				});
@@ -175,7 +175,7 @@ const Layout = (props) => {
 		}
 		const searchFilteredItems = nonFilteredItems.filter(
 			(el) =>
-				el.name.match(`${evt.target.value}`.toUpperCase()) ||
+				el.name.match(`${evt.target.value}`) ||
 				el.type.match(`${evt.target.value}`.toUpperCase()) ||
 				el.category.match(`${evt.target.value}`.toUpperCase())
 		);

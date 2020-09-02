@@ -41,7 +41,7 @@ class InventoryManagementBackend {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const res = await axios.post(
-					`${process.env.REACT_APP_API_URL}/tags/${id}`,
+					`${process.env.REACT_APP_API_URL}/tags/update/${id}`,
 					{},
 					HEADER
 				);
@@ -109,6 +109,22 @@ class InventoryManagementBackend {
 				);
 				if (res.data.code !== 200) throw res.data;
 				resolve(res.data);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+
+	updateSerialData(formData,id) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const res = await axios.post(
+					`${process.env.REACT_APP_API_URL}/serials/update/${id}`,
+					formData,
+					HEADER
+				);
+				if (res.data.code !== 200) throw res.data;
+				resolve(res.data.data);
 			} catch (error) {
 				reject(error);
 			}

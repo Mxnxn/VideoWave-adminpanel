@@ -56,6 +56,8 @@ class Inventory {
 			}
 		});
 	}
+
+	
 }
 
 export let inventoryBackend = new Inventory();
