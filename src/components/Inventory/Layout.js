@@ -43,13 +43,13 @@ const Layout = (props) => {
 						);
 						element.open = false;
 						if (element.length > 0)
-							ttmp = { ...ttmp, [types[k]]: element, open: false };
+							ttmp = { ...ttmp, [types[k]]: element, open: true };
 					}
 					if (Object.keys(ttmp).length > 0)
 						temp = {
 							...temp,
 							[cats[m]]: ttmp,
-							open: false,
+							open: true,
 						};
 					ttmp = {};
 					setProgress({ ...progress, count: 48, view: true });
@@ -60,7 +60,6 @@ const Layout = (props) => {
 						[classes[i]]: temp,
 					};
 			}
-
 			setProgress({ ...progress, count: 100, view: true });
 			setItems(sameClass);
 			setProgress({ ...progress, count: 0, view: false });

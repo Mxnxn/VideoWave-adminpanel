@@ -5,6 +5,7 @@ import {
 	KeyboardDateTimePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
 
 const CustomeDateTimePicker = ({ value, setValue, classes, label }) => {
 	const TextFieldComponent = (props) => {
@@ -24,7 +25,9 @@ const CustomeDateTimePicker = ({ value, setValue, classes, label }) => {
 				label={label}
 				InputAdornmentProps={{ position: "end" }}
 				value={value}
-				onChange={setValue}
+				onChange={(e) =>
+					setValue(moment(e).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS))
+				}
 				TextFieldComponent={TextFieldComponent}
 			/>
 		</MuiPickersUtilsProvider>

@@ -37,7 +37,6 @@ const TagItems = ({ items, setModal, setExistingItems, title, toOpen }) => {
 				const selectedIndex = items.findIndex(
 					(el) => el.id === selected.hold.id
 				);
-				console.log(selectedIndex);
 				if (selectedIndex !== -1) {
 					let taaag = { ...items[selectedIndex] };
 					taaag.tag_name = editField;
