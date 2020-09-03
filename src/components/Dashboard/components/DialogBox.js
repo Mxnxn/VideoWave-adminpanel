@@ -527,6 +527,7 @@ const DailogBox = ({
 											error.includes("client contact detail") ||
 											error.includes("Client contact")
 										}
+										type="number"
 										label="Contact number"
 										classes="mt-4"
 										keyName="client_phone"
@@ -569,6 +570,7 @@ const DailogBox = ({
 										}
 										label="Technician Contact"
 										classes="mt-4"
+										type="number"
 										keyName="technician_details"
 										value={form.technician_details}
 										onValueChange={onValueChange}
@@ -604,6 +606,7 @@ const DailogBox = ({
 										}
 										label="Driver Contact Detail"
 										classes="mt-4"
+										type="number"
 										keyName="driver_phone"
 										value={form.driver_phone}
 										onValueChange={onValueChange}
@@ -614,6 +617,7 @@ const DailogBox = ({
 										error={error.includes("invoice number")}
 										label="Challan or Invoice number"
 										classes="mt-4"
+										type="number"
 										keyName="invoice_number"
 										value={form.invoice_number}
 										onValueChange={onValueChange}

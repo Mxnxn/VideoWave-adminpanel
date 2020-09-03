@@ -37,12 +37,12 @@ class InventoryManagementBackend {
 		});
 	}
 
-	updateTag(id) {
+	updateTag(formData, id) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const res = await axios.post(
 					`${process.env.REACT_APP_API_URL}/tags/update/${id}`,
-					{},
+					formData,
 					HEADER
 				);
 				if (res.data.code !== 200) throw res.data;

@@ -18,6 +18,7 @@ const CustomeTextField = ({
 			id={"title"}
 			error
 			label={label}
+			{...rest}
 			className={`mb-16 ${classes}`}
 			name={keyName}
 			variant="outlined"
