@@ -115,12 +115,26 @@ class InventoryManagementBackend {
 		});
 	}
 
-	updateSerialData(formData,id) {
+	updateSerialData(formData, id) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const res = await axios.post(
 					`${process.env.REACT_APP_API_URL}/serials/update/${id}`,
 					formData,
+					HEADER
+				);
+				if (res.data.code !== 200) throw res.data;
+				resolve(res.data);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+	removeSerialData(id) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const res = await axios.delete(
+					`${process.env.REACT_APP_API_URL}/serials/${id}`,
 					HEADER
 				);
 				if (res.data.code !== 200) throw res.data;

@@ -262,6 +262,22 @@ let ReactCalendar = ({ setProgress, progress }) => {
 		setEditModal(true);
 	};
 
+	const customSlotPropGetter = (date) => {
+		return {
+			className: "day-prop-hover",
+		};
+	};
+
+	function Event({ event }) {
+		return (
+			<span className="d-flex justify-content-center">
+				<strong>
+					{event.name}:{" " + event.location}
+				</strong>
+			</span>
+		);
+	}
+
 	return loading ? (
 		<div
 			style={{ height: "100vh" }}
@@ -273,8 +289,11 @@ let ReactCalendar = ({ setProgress, progress }) => {
 				resizable
 				components={{
 					toolbar: getCustomeToolbar,
+					event: Event,
 				}}
 				eventPropGetter={eventStyleGetter}
+				slotPropGetter={customSlotPropGetter}
+				dayPropGetter={customSlotPropGetter}
 				events={eventObj}
 				step={60}
 				defaultDate={selectedDate}

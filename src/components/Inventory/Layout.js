@@ -115,7 +115,7 @@ const Layout = (props) => {
 		setItems({ ...searchList });
 	};
 
-	const onTapCategoryToggle = (catName, searchList,argCls) => {
+	const onTapCategoryToggle = (catName, searchList, argCls) => {
 		Object.keys(searchList).forEach((cls) => {
 			Object.keys(searchList[cls]).forEach((cat) => {
 				if (cat === catName && argCls === cls) {
@@ -129,7 +129,7 @@ const Layout = (props) => {
 		});
 	};
 
-	const onTapTypeToggle = (typeName, searchList,argCat) => {
+	const onTapTypeToggle = (typeName, searchList, argCat) => {
 		Object.keys(searchList).forEach((cls) => {
 			Object.keys(searchList[cls]).forEach((cat) => {
 				Object.keys(searchList[cls][cat]).forEach((type) => {
@@ -252,6 +252,7 @@ const Layout = (props) => {
 								</div>
 								<SelectedInventory
 									selected={selected}
+									setSelected={setSelected}
 									availableQty={availableQty}
 									tags={existingItems}
 								/>

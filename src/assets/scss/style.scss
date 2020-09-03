@@ -126,7 +126,12 @@
 
 .rbc-event-content {
 	font-family: "Nunito", sans-serif;
-	margin-left: 15px;
+}
+
+.day-prop-hover:hover {
+	background: #eaf6ff;
+	cursor: pointer;
+	border: 1px solid rgba($color: #4e575d, $alpha: 0.3);
 }
 
 .text-purple {
