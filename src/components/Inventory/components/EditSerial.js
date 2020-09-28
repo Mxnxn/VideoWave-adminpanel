@@ -43,10 +43,12 @@ const EditSerial = ({
 
 	useEffect(() => {
 		if (Object.keys(preData).length > 0) {
+			console.log(preData);
 			setState({
 				...state,
 				available_quantity: preData.available_quantity,
 				total_quantity: preData.total_quantity,
+				lost_quantity: preData.lost_quantity,
 				is_lost: preData.is_lost !== 0 ? true : false,
 				is_available: preData.is_lost === 0 ? true : false,
 				notes: preData.notes ? preData.notes : "",
@@ -180,8 +182,6 @@ const EditSerial = ({
 										setState({
 											...state,
 											available_quantity: evt.target.value,
-											lost_quantity:
-												state.available_quantity - evt.target.value,
 											error: initErrors,
 										});
 									}}
@@ -205,11 +205,6 @@ const EditSerial = ({
 										setState({
 											...state,
 											lost_quantity: evt.target.value,
-											available_quantity:
-												state.total_quantity - evt.target.value,
-											total_quantity:
-												Number(state.available_quantity) +
-												Number(evt.target.value),
 										});
 									}}
 								/>

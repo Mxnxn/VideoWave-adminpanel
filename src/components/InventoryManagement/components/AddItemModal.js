@@ -10,7 +10,7 @@ import {
 	DialogContent,
 	TextField,
 } from "@material-ui/core";
-import { CloseRounded, AddRounded } from "@material-ui/icons";
+import { CloseRounded, AddRounded, ClearRounded } from "@material-ui/icons";
 import AlertDanger from "../../Utils/AlertDanger";
 import CustomeTextField from "../../Dashboard/components/CustomeTextFIeld";
 import { inventoryManagementBackend } from "../inventoryManagementBackend";
@@ -176,10 +176,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 			</AppBar>
 			<DialogContent classes={{ root: "p-16 pb-0 sm:p-24 sm:pb-0" }}>
 				<div className="d-flex">
-					<div
-						className="col-sm-12 p-0"
-						style={{ borderRight: "1px solid #f5f5f5" }}
-					>
+					<div className="col-sm-12 p-0">
 						<div className="row">
 							<div className="col-sm-12 col-xl-12">
 								<div className="alert alert-info w-100 rounded mt-2">
@@ -290,7 +287,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 										onValueChange={onDaynamicValueChange}
 									/>
 								</div>
-								<div className="col-sm-12 col-xl-6">
+								<div className="col-sm-12 col-xl-5">
 									<CustomeTextField
 										error={serialItem.error}
 										index={index}
@@ -301,6 +298,22 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 										name="quantity"
 										onValueChange={onDaynamicValueChange}
 									/>
+								</div>
+								<div className="col-sm-1 col-xl-1 m-auto">
+									<IconButton
+										onClick={(e) => {
+											dynamicForm.splice(index, 1);
+											setDynamicForm([...dynamicForm]);
+										}}
+										style={{
+											color: "#fff",
+											height: 36,
+											width: 36,
+										}}
+										className="shadow-1 bg-danger"
+									>
+										<ClearRounded style={{ fontSize: "20px" }} />
+									</IconButton>
 								</div>
 							</div>
 						))}

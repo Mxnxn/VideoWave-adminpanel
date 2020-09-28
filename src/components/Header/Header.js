@@ -6,8 +6,7 @@ import Axios from "axios";
 const Header = ({ heading }) => {
 	const [popup, setPopup] = useState(false);
 	const [notifications, setNotifications] = useState(false);
-	const childPopupClass =
-		"dropdown-menu dropdown-menu-right profile-notification";
+	const childPopupClass = "dropdown-menu dropdown-menu-right profile-notification";
 	const childNotifiClass = "dropdown-menu dropdown-menu-right notification";
 	const parentPopupClass = "drp-user dropdown";
 
@@ -18,8 +17,7 @@ const Header = ({ heading }) => {
 				{},
 				{
 					headers: {
-						Authorization:
-							"Bearer " + window.localStorage.getItem("session_token"),
+						Authorization: "Bearer " + window.localStorage.getItem("session_token"),
 					},
 				}
 			);
@@ -27,13 +25,21 @@ const Header = ({ heading }) => {
 				window.localStorage.removeItem("session_token");
 				window.localStorage.removeItem("uid");
 				window.localStorage.removeItem("email");
+				window.localStorage.removeItem("su");
+				window.localStorage.removeItem("id");
+				window.localStorage.removeItem("wh");
+
 				window.location.reload();
 			}
 		} catch (error) {
 			window.localStorage.removeItem("session_token");
-				window.localStorage.removeItem("uid");
-				window.localStorage.removeItem("email");
-				window.location.reload();
+			window.localStorage.removeItem("uid");
+			window.localStorage.removeItem("email");
+			window.localStorage.removeItem("su");
+			window.localStorage.removeItem("id");
+			window.localStorage.removeItem("wh");
+
+			window.location.reload();
 		}
 	};
 
@@ -56,9 +62,7 @@ const Header = ({ heading }) => {
 			<div className="collapse navbar-collapse">
 				<ul className="navbar-nav mr-auto">
 					<li>
-						<span className="full-screen font-weight-bold text-uppercase geb ls-1 fs-18">
-							{heading}
-						</span>
+						<span className="full-screen font-weight-bold text-uppercase geb ls-1 fs-18">{heading}</span>
 					</li>
 					{/* <li className="nav-item">
 						<div className="dropdown">
@@ -117,9 +121,7 @@ const Header = ({ heading }) => {
 								</IconButton>
 							</span>
 							<div
-								className={
-									notifications ? `${childNotifiClass} show` : childNotifiClass
-								}
+								className={notifications ? `${childNotifiClass} show` : childNotifiClass}
 								style={{ marginRight: 24 }}
 							>
 								<div className="noti-head">
@@ -137,17 +139,12 @@ const Header = ({ heading }) => {
 									</li>
 									<li className="notification">
 										<div className="media">
-											<img
-												className="img-radius"
-												src={require("../../assets/plain.png")}
-												alt="a"
-											/>
+											<img className="img-radius" src={require("../../assets/plain.png")} alt="a" />
 											<div className="media-body">
 												<p>
 													<strong>John Doe</strong>
 													<span className="n-time text-muted">
-														<i className="icon feather icon-clock m-r-10"></i>30
-														min
+														<i className="icon feather icon-clock m-r-10"></i>30 min
 													</span>
 												</p>
 												<p>New ticket Added</p>
@@ -162,9 +159,7 @@ const Header = ({ heading }) => {
 						</div>
 					</li>
 					<li className="nav-item p-0">
-						<div
-							className={popup ? `${parentPopupClass}  show` : parentPopupClass}
-						>
+						<div className={popup ? `${parentPopupClass}  show` : parentPopupClass}>
 							<span
 								style={{ lineHeight: 0 }}
 								aria-haspopup="true"
@@ -178,10 +173,7 @@ const Header = ({ heading }) => {
 									<MoreVert size="large" />
 								</IconButton>
 							</span>
-							<div
-								className={popup ? `show ${childPopupClass}` : childPopupClass}
-								style={{ marginRight: 25 }}
-							>
+							<div className={popup ? `show ${childPopupClass}` : childPopupClass} style={{ marginRight: 25 }}>
 								<div className="pro-head">
 									<img
 										src={require("../../assets/plain.png")}
@@ -189,27 +181,17 @@ const Header = ({ heading }) => {
 										className="img-radius"
 										alt="b"
 									/>
-									<span className="geb  ls-1 fs-18">John Doe</span>
+									<span className="geb  ls-1 fs-18">{window.localStorage.getItem("email")}</span>
 								</div>
 								<ul className="pro-body">
 									<li>
 										<span className="dropdown-item">
-											<Shield
-												size="18"
-												className="mr-2"
-												style={{ verticalAlign: "text-bottom" }}
-											/>{" "}
-											Security Prefrences
+											<Shield size="18" className="mr-2" style={{ verticalAlign: "text-bottom" }} /> Security Prefrences
 										</span>
 									</li>
 									<li onClick={logout}>
 										<span className="dropdown-item">
-											<LogOut
-												size="18"
-												className="mr-2"
-												style={{ verticalAlign: "text-bottom" }}
-											/>{" "}
-											Logout
+											<LogOut size="18" className="mr-2" style={{ verticalAlign: "text-bottom" }} /> Logout
 										</span>
 									</li>
 								</ul>
