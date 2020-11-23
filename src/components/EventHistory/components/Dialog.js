@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Dialog, DialogContent, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { CloseRounded, AddRounded } from "@material-ui/icons";
+import {  Dialog, DialogContent, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
+import { CloseRounded } from "@material-ui/icons";
 
 import moment from "moment";
 import CustomeTextField from "../../Dashboard/components/CustomeTextFIeld";
@@ -12,6 +11,7 @@ const DailogBox = ({ modal, onCancelHandler, event }) => {
 	useEffect(() => {
 		const temp = event.items;
 		setDynamicForm([...temp]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<Dialog fullWidth maxWidth="md" open={modal} component="form">

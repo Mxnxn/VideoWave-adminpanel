@@ -8,11 +8,15 @@ import QRCard from "./QRCard";
 import PopoverOptions from "../../Utils/PopoverOptions";
 import DeleteFAB from "../../Utils/DeleteFAB";
 import EditSerial from "./EditSerial";
+import { PlusCircle } from "react-feather";
+import StoreLedModal from "./StoreLedModal";
 
 const SelectedInventory = ({ selected, availableQty, tags, setSelected }) => {
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [itemId, setItemId] = useState(false);
 	const [editModal, setEditModal] = useState(false);
+
+	const [additionalLedModal,setAdditionalLedModal] = useState(false);
 
 	const onTapDeleteListener = () => {
 		setItemId(selected.id);
@@ -99,6 +103,12 @@ const SelectedInventory = ({ selected, availableQty, tags, setSelected }) => {
 							>
 								<EditRounded />
 							</IconButton>
+							{selected.item_type_code === 2 && (<IconButton
+								className="ml-2"
+								onClick={(evt) => setAdditionalLedModal(true)}
+							>
+								<PlusCircle />
+							</IconButton>)}
 						</span>
 						<span className="ml-auto" style={{ marginRight: "5%" }}>
 							Available Quantity: {availableQty}
@@ -114,6 +124,7 @@ const SelectedInventory = ({ selected, availableQty, tags, setSelected }) => {
 						<DeleteFAB onTapDeleteListener={onTapDeleteListener} />
 						<DeleteModal
 							modal={deleteModal}
+							flag={"true"}
 							onCancelHandler={onCancelHandler}
 							submitHandler={onSubmitDeleteHandler}
 						/>
@@ -122,6 +133,7 @@ const SelectedInventory = ({ selected, availableQty, tags, setSelected }) => {
 							onCancelHandler={onCancelHandler}
 							submitHandler={onSubmitTagDeleteHandler}
 						/>
+						<StoreLedModal modal={additionalLedModal} itemId={selected.id} setModal={setAdditionalLedModal}/>
 					</div>
 					<EditSerial
 						modal={selectedQRCard.edit}

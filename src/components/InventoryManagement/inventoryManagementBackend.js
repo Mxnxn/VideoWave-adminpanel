@@ -144,6 +144,21 @@ class InventoryManagementBackend {
 			}
 		});
 	}
+
+	storeLedCabinet(id,formData) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const res = await axios.post(
+					`${process.env.REACT_APP_API_URL}/items/${id}/ledCabinets`,formData,
+					HEADER
+				);
+				if (res.data.code !== 200) throw res.data;
+				resolve(res.data.data);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
 }
 
 export let inventoryManagementBackend = new InventoryManagementBackend();

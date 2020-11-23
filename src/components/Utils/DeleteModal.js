@@ -12,7 +12,7 @@ import {
 import { CloseRounded } from "@material-ui/icons";
 import AlertDanger from "./AlertDanger";
 
-const AddModal = ({ onCancelHandler, modal, submitHandler, error }) => {
+const AddModal = ({ onCancelHandler, modal, submitHandler, error,flag }) => {
 	return (
 		<Dialog fullWidth maxWidth="sm" open={modal} component="form">
 			<AppBar position="static" className="bg-dark">
@@ -32,11 +32,10 @@ const AddModal = ({ onCancelHandler, modal, submitHandler, error }) => {
 				<div className="d-flex">
 					<div
 						className="col-sm-12 p-0"
-						style={{ borderRight: "1px solid #f5f5f5" }}
 					>
 						<div className="row my-4">
 							<div className="col-sm-12 col-xl-12">
-								<span className="geb fs-20">Are you sure?</span>
+								<span className="geb fs-20">{flag ? "Are you sure? It'll delete all serials along with it!" : "Are you sure?"}</span>
 							</div>
 						</div>
 					</div>

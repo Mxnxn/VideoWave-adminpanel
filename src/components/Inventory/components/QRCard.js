@@ -13,12 +13,17 @@ const QRCard = ({ serials, setSelectedQRCard, setAnchorEl, selectedQRCard }) => 
 				key={index}
 			>
 				<div className="details d-flex flex-column">
-					<div className="d-flex  w-100 fira">Serial : {el.serial_number}</div>
-					<div className="d-flex f-row w-100 " style={{ margin: 0 }}>
-						{/* <span className="fira mt-3">Name : {selected.name}</span> */}
+			<div className="d-flex  w-100 fira">Serial:<span  style={{ color:"#000",fontWeight:600,marginLeft:6 }}>{el.serial_number}</span></div>
+					
+					{el.notes && (<div className="d-flex f-row w-100 " style={{ margin: 0 }}>
+						<span className="fira mt-3">Note : {el.note}</span>
+					</div>)}
+					<div className="d-flex f-row mt-auto">
+						{el.event_name && (<span className="badge badge-warning mt-auto mr-2 fira">Event: {el.event_name}</span>)}
+						{Number(el.is_available) >= 1 && <span className="badge badge-success mt-auto mr-2 fira">Available</span>}
+						{Number(el.is_lost) >= 1 && <span className="badge badge-success mt-auto mr-2 fira">Available</span>}
 					</div>
-					{Number(el.is_available) >= 1 && <span className="badge badge-success mt-auto mr-auto fira">Available</span>}
-					{Number(el.is_lost) >= 1 && <span className="badge badge-success mt-auto mr-auto fira">Available</span>}
+					
 				</div>
 				<div className="qr-area">
 					<img src={`${process.env.REACT_APP_QR_PREFIX}${el.qrcode_path}`} alt="qr" />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Home, Package, Sliders, Users, Folder, LogOut } from "react-feather";
 import { Link } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
-import { CastConnectedRounded } from "@material-ui/icons";
+import { CastConnectedRounded, Layers } from "@material-ui/icons";
 import Axios from "axios";
 
 const Navbar = (props) => {
@@ -27,9 +27,9 @@ const Navbar = (props) => {
 				window.localStorage.removeItem("uid");
 				window.localStorage.removeItem("email");
 				window.localStorage.removeItem("su");
+				window.localStorage.removeItem("nu");
 				window.localStorage.removeItem("id");
 				window.localStorage.removeItem("wh");
-
 				window.location.reload();
 			}
 		} catch (error) {
@@ -37,9 +37,9 @@ const Navbar = (props) => {
 			window.localStorage.removeItem("uid");
 			window.localStorage.removeItem("email");
 			window.localStorage.removeItem("su");
+			window.localStorage.removeItem("nu");
 			window.localStorage.removeItem("id");
 			window.localStorage.removeItem("wh");
-
 			window.location.reload();
 		}
 	};
@@ -98,7 +98,15 @@ const Navbar = (props) => {
 									icon={Sliders}
 								/>
 							)}
-							{window.localStorage.getItem("su") && (
+							{!window.localStorage.getItem("wh") && (
+								<SidebarLink
+									toggleNavBar={toggleNavBar}
+									path="/manage/panels"
+									name="Manage Panels"
+									icon={Layers}
+								/>
+							)}
+							{(window.localStorage.getItem("su") || window.localStorage.getItem("nu")) && (
 								<SidebarLink toggleNavBar={toggleNavBar} path="/users" name="Users" icon={Users} />
 							)}
 							{!window.localStorage.getItem("wh") && (
@@ -110,6 +118,7 @@ const Navbar = (props) => {
 									icon={Folder}
 								/>
 							)}
+							
 							<li
 								className={window.localStorage.getItem("wh") ? toggleNavBar && "mt-auto mb-2" : ""}
 								style={{ cursor: "pointer" }}

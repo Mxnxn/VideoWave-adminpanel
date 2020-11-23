@@ -169,9 +169,9 @@ const EditSerial = ({
 									type="number"
 									error={state.error.available_quantity}
 									label="Available"
-									value={state.available_quantity}
 									variant="outlined"
 									fullWidth
+									value={state.available_quantity}
 									onChange={(evt) => {
 										if (evt.target.value < 0) {
 											let newError = state.error;

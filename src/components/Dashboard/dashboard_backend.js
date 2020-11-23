@@ -6,6 +6,13 @@ const HEADERS = {
 		Authorization: "Bearer " + window.localStorage.getItem("session_token"),
 	},
 };
+
+const onUnauthentication = () => {
+	window.localStorage.removeItem("session_token");
+	window.localStorage.removeItem("nu");
+	window.location.reload();
+}
+
 class DashboardBackend {
 	getAllEvents(stoken) {
 		return new Promise((resolve, reject) => {
@@ -43,6 +50,10 @@ class DashboardBackend {
 				})
 				.catch((err) => {
 					reject(err);
+					if(err.response)	
+						if(err.response.data.code === 401){
+							onUnauthentication();
+						}
 				});
 		});
 	}
@@ -57,6 +68,10 @@ class DashboardBackend {
 				})
 				.catch((err) => {
 					reject(err);
+					if(err.response)	
+					if(err.response.data.code === 401){
+						onUnauthentication();
+					}
 				});
 		});
 	}
@@ -71,6 +86,10 @@ class DashboardBackend {
 				}
 			} catch (err) {
 				reject(err);
+				if(err.response)	
+					if(err.response.data.code === 401){
+						onUnauthentication();
+					}
 			}
 		});
 	}
@@ -97,6 +116,10 @@ class DashboardBackend {
 					} else {
 						reject(err.response);
 					}
+					if(err.response)	
+						if(err.response.data.code === 401){
+							onUnauthentication();
+						}
 				});
 		});
 	}
@@ -111,6 +134,10 @@ class DashboardBackend {
 				}
 			} catch (err) {
 				reject(err);
+				if(err.response)	
+					if(err.response.data.code === 401){
+						onUnauthentication();
+					}
 			}
 		});
 	}

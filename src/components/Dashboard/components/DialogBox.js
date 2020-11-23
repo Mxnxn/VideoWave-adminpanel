@@ -148,7 +148,12 @@ const DailogBox = ({ open, edit, start, end, report, setModal, items, subItems }
 				window.location.reload();
 			})
 			.catch((err) => {
-				console.log("ERR:", err.response);
+				if(err.response){
+					if(err.response.data.message.client_email[0]){
+						setError("Enter proper client email!");
+					}
+				}
+				console.log("ERR:", err.response.data.message.client_email[0]);
 			});
 	}
 

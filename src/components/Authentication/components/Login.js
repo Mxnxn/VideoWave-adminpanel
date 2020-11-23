@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { AlertCircle, CheckCircle } from "react-feather";
 import Constants from "../../../Constants/Constants";
+import useKeyPress from "../../Utils/useKeyPress";
 import { authBackend } from "../auth_backend";
 
 const Login = ({ setView, admin }) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState(admin ? "admin@admin.admin":"abc@xyz.com");
+	const [password, setPassword] = useState(admin ? "adminadmin":"cleartext");
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
 
@@ -25,6 +26,7 @@ const Login = ({ setView, admin }) => {
 				if (res) {
 					window.localStorage.setItem("session_token", res.data.session_token);
 					window.localStorage.setItem("id", res.data.id);
+					window.localStorage.setItem("nu", true);
 					setSuccess(res.message);
 					setTimeout(() => {
 						window.location.reload();
@@ -63,6 +65,19 @@ const Login = ({ setView, admin }) => {
 			});
 	};
 
+	const enterListener = useKeyPress("Enter");
+
+	useEffect(()=>{
+		if(enterListener && admin){
+			onAdminLogin();
+			return;
+		}else if(enterListener){
+			onLoginHandler();
+			return;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[enterListener])
+	
 	return (
 		<div className="card">
 			<div className="card-body text-center">
@@ -102,6 +117,16 @@ const Login = ({ setView, admin }) => {
 						placeholder="Password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
+						onKeyPress={(evt)=>{
+							console.log(evt.key)
+							if(evt.key === "Enter"){
+								if(admin){
+									onAdminLogin();
+								}else{
+									onLoginHandler();
+								}
+							}
+						}}
 					/>
 				</div>
 

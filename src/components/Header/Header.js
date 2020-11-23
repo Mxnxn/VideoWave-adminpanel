@@ -28,7 +28,7 @@ const Header = ({ heading }) => {
 				window.localStorage.removeItem("su");
 				window.localStorage.removeItem("id");
 				window.localStorage.removeItem("wh");
-
+				window.localStorage.removeItem("nu");
 				window.location.reload();
 			}
 		} catch (error) {
@@ -36,9 +36,9 @@ const Header = ({ heading }) => {
 			window.localStorage.removeItem("uid");
 			window.localStorage.removeItem("email");
 			window.localStorage.removeItem("su");
+			window.localStorage.removeItem("nu");
 			window.localStorage.removeItem("id");
 			window.localStorage.removeItem("wh");
-
 			window.location.reload();
 		}
 	};

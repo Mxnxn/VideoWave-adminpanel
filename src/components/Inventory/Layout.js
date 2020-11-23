@@ -150,6 +150,9 @@ const Layout = (props) => {
 
 	useEffect(() => {
 		if (selected) {
+			if(selected.item_type_code === 2 || selected.item_type_code === 1 ){
+				return setAvailableQty(selected.available_quantity);
+			}
 			const temp = selected.serials.filter(
 				(el) => Number(el.is_available) === 1
 			).length;

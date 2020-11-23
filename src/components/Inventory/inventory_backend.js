@@ -1,5 +1,11 @@
 import axios from "axios";
 
+const onUnauthentication = () => {
+	window.localStorage.removeItem("session_token");
+	window.localStorage.removeItem("nu");
+	window.location.reload();
+}
+
 class Inventory {
 	getAllInventory(stoken) {
 		return new Promise(async (resolve, reject) => {
@@ -13,6 +19,10 @@ class Inventory {
 				resolve(res.data.data);
 			} catch (error) {
 				reject(error);
+				if(error.response)	
+					if(error.response.data.code === 401){
+						onUnauthentication();
+					}
 			}
 		});
 	}
@@ -33,6 +43,10 @@ class Inventory {
 				resolve(res.data.data);
 			} catch (error) {
 				reject(error);
+				if(error.response)	
+					if(error.response.data.code === 401){
+						onUnauthentication();
+					}
 			}
 		});
 	}
@@ -53,6 +67,10 @@ class Inventory {
 				resolve(res.data.data);
 			} catch (error) {
 				reject(error);
+				if(error.response)	
+					if(error.response.data.code === 401){
+						onUnauthentication();
+					}
 			}
 		});
 	}
