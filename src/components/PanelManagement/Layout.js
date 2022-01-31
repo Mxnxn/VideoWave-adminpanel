@@ -85,9 +85,9 @@ const Layout = (props) => {
             setState(prev=> {return {...prev,allCabinets:res.data}});
             setLoading(true);
         } catch (error) {
-            alert(error.response.data.message);
+            // alert(error.response.data.message);
             setModal({...initModalState});
-            setState(prev=>{return {...prev,modalInput:""}})
+            setState(prev=>{return {...prev,modalInput:"",allCabinets:[]}})
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);

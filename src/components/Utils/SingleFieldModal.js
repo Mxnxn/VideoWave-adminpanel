@@ -21,7 +21,6 @@ const AddModal = ({onCancelHandler,modal,error,title,value,setValue,submitHandle
 						<div className="d-flex">
 							<div
 								className="col-sm-12 p-0"
-								style={{ borderRight: "1px solid #f5f5f5" }}
 							>
                                 <div className="alert alert-info w-100 rounded mt-2">Note: Enter it Properly, it will be used later!</div>
                                 <AlertDanger error={error} />

@@ -72,8 +72,8 @@ const TagItems = ({ items, setModal, setExistingItems, title, toOpen }) => {
 
 	const classes =
 		title === "Types"
-			? "col pr-0 pl-4 h-100 bg-white rounded shadow mt-2"
-			: "col pr-0 pl-4 h-100 bg-white rounded shadow";
+			? "col pr-0 pl-4 h-100 bg-white rounded shadow mt-2 pb-2"
+			: "col pr-0 pl-4 h-100 bg-white rounded shadow pb-2";
 
 	const openOrigin = {
 		vertical: "bottom",
@@ -117,8 +117,8 @@ const TagItems = ({ items, setModal, setExistingItems, title, toOpen }) => {
 					setAnchorEl={setAnchorEl}
 					transOrigin={transOrigin}
 					openOrigin={openOrigin}
-					onEditListener={(e) => setModals({ ...modals, edit: true })}
-					onDeleteListener={(e) => setModals({ ...modals, delete: true })}
+					onEditListener={(e) => {setModals({ ...modals, edit: true });setAnchorEl(null);setSelected({...selected,view:false})}}
+					onDeleteListener={(e) => {setModals({ ...modals, delete: true });setAnchorEl(null);setSelected({...selected,view:false})}}
 				/>
 				<Button
 					onClick={(e) => setModal(toOpen)}

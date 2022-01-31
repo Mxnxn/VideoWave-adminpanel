@@ -27,6 +27,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 		type: "",
 		category: "",
 		name: "",
+		item_type_code:"",
 		id: "",
 		error: false,
 	});
@@ -135,6 +136,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 				formData.set("class", itemDetails.class.id);
 				formData.set("category", itemDetails.category.id);
 				formData.set("type", itemDetails.type.id);
+				formData.set("item_type_code", itemDetails.item_type_code);
 				let count = 0;
 				dynamicForm.forEach((el) => (count = Number(el.quantity) + count));
 				formData.set("total_quantity", count);
@@ -197,8 +199,8 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 								<span className="geb fs-20">Add Item Details</span>
 							</div>
 						</div>
-						<div className="row mt-3 ">
-							<div className="col-sm-12 col-xl-6">
+						<div className="row ">
+							<div className="col-sm-12 col-xl-6 mt-3">
 								<Autocomplete
 									id="combo-box-demo"
 									options={classes}
@@ -215,7 +217,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 									)}
 								/>
 							</div>
-							<div className="col-sm-12 col-xl-6">
+							<div className="col-sm-12 col-xl-6 mt-3">
 								<Autocomplete
 									id="combo-box-demo"
 									options={categories}
@@ -237,8 +239,8 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 								/>
 							</div>
 						</div>
-						<div className="row mt-3 ">
-							<div className="col-sm-12 col-xl-6">
+						<div className="row  ">
+							<div className="col-sm-12 col-xl-6 mt-3">
 								<Autocomplete
 									id="combo-box-demo"
 									options={types}
@@ -257,6 +259,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 							</div>
 							<div className="col-sm-12 col-xl-6">
 								<TextField
+									className="mt-3"
 									error={itemDetails.error}
 									label="Name"
 									value={itemDetails.name}
@@ -268,18 +271,39 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 								/>
 							</div>
 						</div>
+						<div className="row  ">
+							<div className="col-sm-12 col-xl-6 mt-3">
+								<Autocomplete
+									id="combo-box-demo"
+									options={[{code:0,name:"Default"},{code:1,name:"Cables"},{code:2,name:"LED Cabinet"}]}
+									onChange={(e, value) => {
+										setItemDetails({ ...itemDetails, item_type_code: value.code });
+										return value.name;
+									}}
+									value={itemDetails.type}
+									getOptionLabel={(option) => {
+										return option ? option.name : "";
+									}}
+									renderInput={(params) => (
+										<TextField label="Type" variant="outlined" {...params} />
+									)}
+								/>
+							</div>
+						</div>
 						<div className="row my-3 mr-3">
 							<div className="col-sm-12 col-xl-12">
 								<span className="geb fs-20">Add new Serial and Quantity</span>
 							</div>
 						</div>
 						{dynamicForm.map((serialItem, index) => (
-							<div key={index} className="row mt-3 ">
+							<div key={index} className="row ">
 								<div className="col-sm-12 col-xl-6">
 									<CustomeTextField
 										error={serialItem.error}
 										index={index}
 										label="Serial Number"
+										className="mt-3"
+
 										value={serialItem.serial_number}
 										type="text"
 										keyName="serial_number"
@@ -292,6 +316,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 										error={serialItem.error}
 										index={index}
 										label="Quantity"
+										className="mt-3"
 										type="number"
 										value={serialItem.quantity}
 										keyName="quantity"
@@ -310,7 +335,7 @@ const AddItemModal = ({ onCancelHandler, modal, title, state, stuffs }) => {
 											height: 36,
 											width: 36,
 										}}
-										className="shadow-1 bg-danger"
+										className="shadow-1 bg-danger mt-3"
 									>
 										<ClearRounded style={{ fontSize: "20px" }} />
 									</IconButton>

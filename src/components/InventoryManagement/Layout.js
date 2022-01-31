@@ -162,7 +162,7 @@ const InventoryManagement = (props) => {
 								<div className="pcoded-inner-content">
 									<div className="main-body">
 										<div className="row fix-h-85">
-											<div className="col-lg-4 h-100 px-0 pr-2">
+											<div className="col-lg-6 px-0 pr-2">
 												<TagItems
 													items={[...new Set(existingItems.classes)]}
 													setModal={modalOpener}
@@ -172,7 +172,7 @@ const InventoryManagement = (props) => {
 													itemsType={"Classes"}
 												/>
 											</div>
-											<div className="col-lg-8 h-100 px-0  d-flex flex-column ">
+											<div className="col-lg-6 px-0 d-flex flex-column ">
 												<TagItems
 													items={[...new Set(existingItems.categories)]}
 													setModal={modalOpener}
@@ -180,13 +180,16 @@ const InventoryManagement = (props) => {
 													toOpen={"addCategory"}
 													setExistingItems={setExistingItems}
 												/>
+												
+											</div>
+											<div className="col-lg-12 h-100 px-0 pb-3   d-flex flex-column ">
 												<TagItems
-													title={"Types"}
-													items={[...new Set(existingItems.types)]}
-													setModal={modalOpener}
-													toOpen={"addType"}
-													setExistingItems={setExistingItems}
-												/>
+														title={"Types"}
+														items={[...new Set(existingItems.types)]}
+														setModal={modalOpener}
+														toOpen={"addType"}
+														setExistingItems={setExistingItems}
+													/>
 											</div>
 										</div>
 									</div>
